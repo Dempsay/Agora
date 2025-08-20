@@ -28,6 +28,11 @@ namespace Backend.Controllers
             return await _context.Capacitaciones.ToListAsync();
         }
 
+        [HttpGet("deleteds/")]
+        public async Task<ActionResult<IEnumerable<Capacitacion>>> GetCapacitacionesDeleteds()
+        {
+            return await _context.Capacitaciones.IgnoreQueryFilters().Where(c=>c.IsDeleted).ToListAsync();
+        }
         // GET: api/Capacitaciones/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Capacitacion>> GetCapacitacion(int id)
@@ -93,13 +98,27 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-
-            _context.Capacitaciones.Remove(capacitacion);
+            capacitacion.IsDeleted = true;
+            _context.Capacitaciones.Update(capacitacion);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
+        [HttpPut("Restore/{id}")]
+        public async Task<IActionResult> RestoreCapacitacion(int id)
+        {
+            var capacitacion = await _context.Capacitaciones.IgnoreQueryFilters().FirstOrDefaultAsync(c=>c.Id.Equals(id));
+            if (capacitacion == null)
+            {
+                return NotFound();
+            }
+            capacitacion.IsDeleted = false;
+            _context.Capacitaciones.Update(capacitacion);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
         private bool CapacitacionExists(int id)
         {
             return _context.Capacitaciones.Any(e => e.Id == id);
