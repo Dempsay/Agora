@@ -28,6 +28,12 @@ namespace Backend.Controllers
             return await _context.Inscripciones.ToListAsync();
         }
 
+        [HttpGet("deleteds/")]
+        public async Task<ActionResult<IEnumerable<Inscripcion>>> GetInscripcionesDeleteds()
+        {
+            return await _context.Inscripciones.IgnoreQueryFilters().Where(c => c.IsDeleted).ToListAsync();
+        }
+
         // GET: api/Inscripciones/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Inscripcion>> GetInscripcion(int id)
@@ -93,13 +99,28 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-
-            _context.Inscripciones.Remove(inscripcion);
+            inscripcion.IsDeleted = false;
+            _context.Inscripciones.Update(inscripcion);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
+        [HttpDelete("restore/{id}")]
+        public async Task<IActionResult> RestoreInscripcion(int id)
+        {
+            var inscripcion = await _context.Inscripciones.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id.Equals(id));
+            if (inscripcion == null)
+            {
+                return NotFound();
+            }
+
+            inscripcion.IsDeleted = false;
+            _context.Inscripciones.Update(inscripcion);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
         private bool InscripcionExists(int id)
         {
             return _context.Inscripciones.Any(e => e.Id == id);
