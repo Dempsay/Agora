@@ -1,174 +1,168 @@
-# Agora
+18.188.141.17
 
-🏛️ Ágora — Plataforma de Gestión de Capacitaciones
+# 🏛️ Ágora — Plataforma de Gestión de Capacitaciones
 
-Ágora es un proyecto educativo desarrollado junto a estudiantes de 2.º año de Programación. Su objetivo es brindar una plataforma integral para gestionar capacitaciones de una institución educativa: desde la publicación y la inscripción (online/presencial), hasta la acreditación, cobros y emisión de certificados.
+![Estado](https://img.shields.io/badge/estado-en%20desarrollo-yellow) ![Versión](https://img.shields.io/badge/version-0.1.0-blue) ![Hecho por](https://img.shields.io/badge/2do%20Año-Programación-4CAF50)
 
-📌 Objetivo del proyecto
+Ágora es un proyecto educativo desarrollado junto a estudiantes de 2.º año de Programación. Su objetivo es brindar una plataforma integral para gestionar **capacitaciones** de una institución educativa: desde la publicación y la inscripción (online/presencial), hasta la **acreditación**, **cobros** y **emisión de certificados**.
 
-Construir un sistema claro, ágil y auditable que permita organizar capacitaciones y sus participantes, ofreciendo:
+---
 
-Un flujo simple de inscripción (para público general, docentes y alumnos).
+## 📌 Objetivo del proyecto
 
-Control de cupos, costos diferenciados por tipo de inscripción y habilitación/deshabilitación de inscripciones.
+Construir un sistema **claro, ágil y auditable** que permita organizar capacitaciones y sus participantes, ofreciendo:
 
-Acreditación de asistencia y registro de pagos con reportes e impresión de certificados (individual y masiva).
+* Un **flujo simple** de inscripción (para público general, docentes y alumnos).
+* **Control de cupos**, **costos diferenciados** por tipo de inscripción y **habilitación/deshabilitación** de inscripciones.
+* **Acreditación de asistencia** y **registro de pagos** con reportes e **impresión de certificados** (individual y masiva).
+* **Reportes operativos** para mesa de acreditación y administración.
 
-Reportes operativos para mesa de acreditación y administración.
+---
 
-🗂️ Índice
+## 🗂️ Índice
 
-Objetivo del proyecto
+* [Objetivo del proyecto](#-objetivo-del-proyecto)
+* [Alcance y funcionalidades](#-alcance-y-funcionalidades)
+* [Roles y reglas generales](#-roles-y-reglas-generales)
+* [Flujos principales](#-flujos-principales)
+* [Entidades clave](#-entidades-clave)
+* [Reportes e impresiones](#-reportes-e-impresiones)
+* [Hoja de ruta (Roadmap)](#-hoja-de-ruta-roadmap)
+* [Estructura del repositorio (sugerida)](#-estructura-del-repositorio-sugerida)
+* [Cómo contribuir](#-cómo-contribuir)
+* [Licencia](#-licencia)
 
-Alcance y funcionalidades
+---
 
-Roles y reglas generales
+## ✅ Alcance y funcionalidades
 
-Flujos principales
+A continuación se detallan los **requerimientos funcionales** priorizados para la primera versión:
 
-Entidades clave
+1. 📚 **Capacitaciones**
 
-Reportes e impresiones
+   * Alta, modificación y eliminación de **capacitaciones**.
+   * Habilitar/Deshabilitar la **inscripción** por capacitación.
+   * Definir **cupo máximo**.
+   * Definir **costos** por tipo de inscripción: público general, docentes y alumnos.
 
-Hoja de ruta (Roadmap)
+2. 👤 **Usuarios**
 
-Estructura del repositorio (sugerida)
+   * Alta, modificación y eliminación de **usuarios**.
 
-Cómo contribuir
+3. 💻 **Inscripción online**
 
-Licencia
+   * Inscribirse a una capacitación disponible.
+   * La inscripción se **desactiva automáticamente** al completar el **cupo máximo**.
+   * *(Futuro)* Carga de **comprobante de transferencia** para acreditar pago; validación por un usuario autorizado.
 
-✅ Alcance y funcionalidades
+4. 🏫 **Inscripción presencial**
 
-A continuación se detallan los requerimientos funcionales priorizados para la primera versión:
+   * Registro manual por personal autorizado.
 
-📚 Capacitaciones
+5. ✅ **Acreditación de asistencia**
 
-Alta, modificación y eliminación de capacitaciones.
+   * Marcado de asistencia para cada inscripto.
 
-Habilitar/Deshabilitar la inscripción por capacitación.
+6. 📜 **Certificados**
 
-Definir cupo máximo.
+   * Impresión de certificados para acreditados que abonaron (si aplica).
+   * **Impresión masiva** por capacitación e **individual** por asistente.
+   * Si la capacitación **no tiene costo**, se imprime a todo **acreditado**.
+   * Rol **administrativo** puede **imprimir a todos** (pago contra entrega).
 
-Definir costos por tipo de inscripción: público general, docentes y alumnos.
+7. 💰 **Pagos**
 
-👤 Usuarios
+   * Pantalla específica para **registración de pagos** (monto, medio, fecha, observaciones).
 
-Alta, modificación y eliminación de usuarios.
+8. 📝 **Listado de inscriptos**
 
-💻 Inscripción online
+   * **Impresión** de inscriptos por capacitación (para mesa de acreditación manual).
 
-Inscribirse a una capacitación disponible.
+9. 📄 **Listado de acreditados**
 
-La inscripción se desactiva automáticamente al completar el cupo máximo.
+   * **Impresión** con detalle de **si pagaron** y **forma de pago**.
 
-(Futuro) Carga de comprobante de transferencia para acreditar pago; validación por un usuario autorizado.
+10. 💵 **Reporte de cobros**
 
-🏫 Inscripción presencial
+    * **Impresión** de cobros por usuario y por capacitación, con **detalle y totales** por forma de pago.
 
-Registro manual por personal autorizado.
+---
 
-✅ Acreditación de asistencia
+## 🧑‍🤝‍🧑 Roles y reglas generales
 
-Marcado de asistencia para cada inscripto.
+* **Público en general / Docente / Alumno:** puede **inscribirse** online cuando esté habilitado y existan cupos.
+* **Administrativo:** puede **gestionar inscripciones presenciales**, **registrar pagos**, **acreditar asistencia** y **emitir certificados** (individual/masivo).
+* **Reglas destacadas:**
 
-📜 Certificados
+  * La **inscripción** depende de **habilitación** y **cupo**.
+  * La **emisión de certificados** requiere **asistencia acreditada** y, si corresponde, **pago registrado**.
 
-Impresión de certificados para acreditados que abonaron (si aplica).
+---
 
-Impresión masiva por capacitación e individual por asistente.
+## 🔁 Flujos principales
 
-Si la capacitación no tiene costo, se imprime a todo acreditado.
+1. **Publicar capacitación**
 
-Rol administrativo puede imprimir a todos (pago contra entrega).
+   1. Crear capacitación → 2) Definir cupo y costos → 3) Habilitar inscripciones.
 
-💰 Pagos
+2. **Inscripción online**
 
-Pantalla específica para registración de pagos (monto, medio, fecha, observaciones).
+   1. Usuario elige capacitación → 2) Completa datos → 3) Sistema valida cupo → 4) Registro de inscripción.
 
-📝 Listado de inscriptos
+3. **Inscripción presencial**
 
-Impresión de inscriptos por capacitación (para mesa de acreditación manual).
+   1. Administrativo busca o crea usuario → 2) Registra inscripción → 3) Entrega comprobante.
 
-📄 Listado de acreditados
+4. **Acreditación de asistencia**
 
-Impresión con detalle de si pagaron y forma de pago.
+   1. Lista de inscriptos → 2) Marcar presente/ausente → 3) Guardar acreditación.
 
-💵 Reporte de cobros
+5. **Registro de pagos**
 
-Impresión de cobros por usuario y por capacitación, con detalle y totales por forma de pago.
+   1. Seleccionar inscripto → 2) Registrar medio/monto/fecha → 3) Asociar a capacitación.
 
-🧑‍🤝‍🧑 Roles y reglas generales
+6. **Emisión de certificados**
 
-Público en general / Docente / Alumno: puede inscribirse online cuando esté habilitado y existan cupos.
+   * **Individual**: verificar requisitos → generar e imprimir.
+   * **Masivo**: filtrar por capacitación → validar requisitos → imprimir lote.
 
-Administrativo: puede gestionar inscripciones presenciales, registrar pagos, acreditar asistencia y emitir certificados (individual/masivo).
+---
 
-Reglas destacadas:
+## 🧱 Entidades clave
 
-La inscripción depende de habilitación y cupo.
+| Entidad          | Descripción breve                                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------- |
+| **Capacitación** | Título, descripción, fechas, **cupo máximo**, estado de inscripción (habilitada/inhabilitada), **costos por tipo**. |
+| **Usuario**      | Datos personales, tipo: **público**, **docente**, **alumno**, **administrativo**.                                   |
+| **Inscripción**  | Usuario ↔ Capacitación, estado (activa/cancelada), origen (**online/presencial**).                                  |
+| **Asistencia**   | Registro por inscrito (acreditado / no acreditado).                                                                 |
+| **Pago**         | Monto, **forma de pago**, fecha, referencia (comprobante), vinculado a Inscripción/Capacitación.                    |
+| **Certificado**  | Emisión individual/masiva para **acreditados** (y con pago si corresponde).                                         |
 
-La emisión de certificados requiere asistencia acreditada y, si corresponde, pago registrado.
+---
 
-🔁 Flujos principales
+## 🖨️ Reportes e impresiones
 
-Publicar capacitación
+* **Inscriptos por capacitación** (para mesa de acreditación).
+* **Acreditados por capacitación** con estado de pago y forma de pago.
+* **Cobros** por usuario y capacitación, con **detalles y totales** por forma de pago.
+* **Certificados**: emisión **individual** y **masiva**.
 
-Crear capacitación → 2) Definir cupo y costos → 3) Habilitar inscripciones.
+---
 
-Inscripción online
+## 🗺️ Hoja de ruta (Roadmap)
 
-Usuario elige capacitación → 2) Completa datos → 3) Sistema valida cupo → 4) Registro de inscripción.
+* [ ] **MVP**: ABM de capacitaciones y usuarios, inscripción online/presencial, acreditación, pagos, reportes básicos y emisión de certificados.
+* [ ] **Evidencia de pago (3.2)**: carga de imagen de transferencia + circuito de **validación** por administrativo.
+* [ ] **Mejoras UX**: filtros avanzados, búsqueda rápida, exportación a CSV/PDF.
+* [ ] **Permisos granulares** por rol y auditoría de acciones.
+* [ ] **Notificaciones** (email/whatsapp) para confirmaciones y recordatorios.
 
-Inscripción presencial
+---
 
-Administrativo busca o crea usuario → 2) Registra inscripción → 3) Entrega comprobante.
+## 📁 Estructura del repositorio (sugerida)
 
-Acreditación de asistencia
-
-Lista de inscriptos → 2) Marcar presente/ausente → 3) Guardar acreditación.
-
-Registro de pagos
-
-Seleccionar inscripto → 2) Registrar medio/monto/fecha → 3) Asociar a capacitación.
-
-Emisión de certificados
-
-Individual: verificar requisitos → generar e imprimir.
-
-Masivo: filtrar por capacitación → validar requisitos → imprimir lote.
-
-🧱 Entidades clave
-Entidad	Descripción breve
-Capacitación	Título, descripción, fechas, cupo máximo, estado de inscripción (habilitada/inhabilitada), costos por tipo.
-Usuario	Datos personales, tipo: público, docente, alumno, administrativo.
-Inscripción	Usuario ↔ Capacitación, estado (activa/cancelada), origen (online/presencial).
-Asistencia	Registro por inscrito (acreditado / no acreditado).
-Pago	Monto, forma de pago, fecha, referencia (comprobante), vinculado a Inscripción/Capacitación.
-Certificado	Emisión individual/masiva para acreditados (y con pago si corresponde).
-🖨️ Reportes e impresiones
-
-Inscriptos por capacitación (para mesa de acreditación).
-
-Acreditados por capacitación con estado de pago y forma de pago.
-
-Cobros por usuario y capacitación, con detalles y totales por forma de pago.
-
-Certificados: emisión individual y masiva.
-
-🗺️ Hoja de ruta (Roadmap)
-
- MVP: ABM de capacitaciones y usuarios, inscripción online/presencial, acreditación, pagos, reportes básicos y emisión de certificados.
-
- Evidencia de pago (3.2): carga de imagen de transferencia + circuito de validación por administrativo.
-
- Mejoras UX: filtros avanzados, búsqueda rápida, exportación a CSV/PDF.
-
- Permisos granulares por rol y auditoría de acciones.
-
- Notificaciones (email/whatsapp) para confirmaciones y recordatorios.
-
-📁 Estructura del repositorio (sugerida)
+```
 /docs/                 # Documentación funcional/técnica, decisiones y diagramas
 /frontend/             # App web (por definir stack)
  /...                  
@@ -178,29 +172,33 @@ Certificados: emisión individual y masiva.
 /.github/workflows/    # Pipelines (si corresponde)
 README.md
 LICENSE
+```
 
+> 💡 **Sugerencia didáctica:** mantener en `/docs` la **trazabilidad** entre requerimientos y pantallas/endpoints, y anotar decisiones (ADR) para aprender de la arquitectura del proyecto.
 
-💡 Sugerencia didáctica: mantener en /docs la trazabilidad entre requerimientos y pantallas/endpoints, y anotar decisiones (ADR) para aprender de la arquitectura del proyecto.
+---
 
-🤝 Cómo contribuir
+## 🤝 Cómo contribuir
 
-Crea una rama con el formato feature/descripcion-corta o fix/descripcion-corta.
+1. Crea una rama con el formato `feature/descripcion-corta` o `fix/descripcion-corta`.
+2. Acompaña tus cambios con **descripción clara** y, cuando aplique, **capturas** o **gif**.
+3. Relaciona tu PR con el requerimiento funcional correspondiente (ej.: “RF-6 Certificados”).
+4. Pide **code review** a otro/a compañero/a y a la cátedra antes de mergear.
+5. Mantén el estilo de código consistente y agrega tests cuando sea posible.
 
-Acompaña tus cambios con descripción clara y, cuando aplique, capturas o gif.
+---
 
-Relaciona tu PR con el requerimiento funcional correspondiente (ej.: “RF-6 Certificados”).
+## 📜 Licencia
 
-Pide code review a otro/a compañero/a y a la cátedra antes de mergear.
+Este proyecto se distribuye bajo la licencia **MIT** (o la que la cátedra defina). Incluye el archivo `LICENSE` en el repositorio.
 
-Mantén el estilo de código consistente y agrega tests cuando sea posible.
+---
 
-📜 Licencia
+### ✉️ Contacto
 
-Este proyecto se distribuye bajo la licencia MIT (o la que la cátedra defina). Incluye el archivo LICENSE en el repositorio.
+Proyecto **Ágora** — 2.º Año Programación
+Si tenés dudas, sugerencias o encontrás un bug, abrí un **Issue** y describí claramente el caso.
 
-✉️ Contacto
+---
 
-Proyecto Ágora — 2.º Año Programación
-Si tenés dudas, sugerencias o encontrás un bug, abrí un Issue y describí claramente el caso.
-
-“Lo que no se mide, no se mejora.” — Ágora prioriza la claridad operativa y la trazabilidad para que cada decisión y funcionalidad se pueda enseñar, aprender y evolucionar.
+> *“Lo que no se mide, no se mejora.”* — Ágora prioriza la **claridad operativa** y la **trazabilidad** para que cada decisión y funcionalidad se pueda enseñar, aprender y evolucionar.
