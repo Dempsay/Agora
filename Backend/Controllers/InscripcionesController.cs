@@ -106,7 +106,7 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-        [HttpDelete("restore/{id}")]
+        [HttpPut("restore/{id}")]
         public async Task<IActionResult> RestoreInscripcion(int id)
         {
             var inscripcion = await _context.Inscripciones.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id.Equals(id));

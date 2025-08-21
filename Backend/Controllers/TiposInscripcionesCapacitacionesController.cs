@@ -28,6 +28,12 @@ namespace Backend.Controllers
             return await _context.TiposInscripcionesCapacitacion.Include(t => t.capacitacion).Include(t => t.tipoInscripcion).ToListAsync();
         }
 
+        [HttpGet("Deleteds/")]
+        public async Task<ActionResult<IEnumerable<TipoInscripcionCapacitacion>>> DeletedsTiposInscripcionesCapacitacion()
+        {
+            return await _context.TiposInscripcionesCapacitacion.IgnoreQueryFilters().Where(c => c.IsDeleted).ToListAsync();
+        }
+
         // GET: api/TiposInscripcionesCapacitaciones/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TipoInscripcionCapacitacion>> GetTipoInscripcionCapacitacion(int id)
@@ -93,13 +99,27 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-
-            _context.TiposInscripcionesCapacitacion.Remove(tipoInscripcionCapacitacion);
+            tipoInscripcionCapacitacion.IsDeleted = false;
+            _context.TiposInscripcionesCapacitacion.Update(tipoInscripcionCapacitacion);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> RestoredTipoInscripcionCapacitacion(int id)
+        {
+            var tipoInscripcionCapacitacion = await _context.TiposInscripcionesCapacitacion.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id.Equals(id));
+            if (tipoInscripcionCapacitacion == null)
+            {
+                return NotFound();
+            }
+            tipoInscripcionCapacitacion.IsDeleted = false;
+            _context.TiposInscripcionesCapacitacion.Update(tipoInscripcionCapacitacion);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
         private bool TipoInscripcionCapacitacionExists(int id)
         {
             return _context.TiposInscripcionesCapacitacion.Any(e => e.Id == id);

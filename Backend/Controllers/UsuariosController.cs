@@ -28,8 +28,13 @@ namespace Backend.Controllers
             return await _context.Usuarios.ToListAsync();
         }
 
-        // GET: api/Usuarios/5
-        [HttpGet("{id}")]
+        [HttpGet("Deleteds")]
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuariosDeleteds()
+        {
+            // Devuelve solo los usuarios que tienen IsDeleted en true
+            return await _context.Usuarios.IgnoreQueryFilters().Where(c => c.IsDeleted).ToListAsync();
+        }
+            [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
@@ -88,18 +93,32 @@ namespace Backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsuario(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var usuario = await _context.Usuarios.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id.Equals(id));
             if (usuario == null)
             {
                 return NotFound();
             }
-
-            _context.Usuarios.Remove(usuario);
+            usuario.IsDeleted = false;
+            _context.Usuarios.Update(usuario);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
+        [HttpPut("Restore/{id}")]
+        public async Task<IActionResult> RestoreUsuario(int id)
+        {
+            var usuario = await _context.Usuarios.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id.Equals(id));
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            usuario.IsDeleted = false;
+            _context.Usuarios.Update(usuario);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
         private bool UsuarioExists(int id)
         {
             return _context.Usuarios.Any(e => e.Id == id);

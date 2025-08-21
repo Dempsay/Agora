@@ -28,6 +28,12 @@ namespace Backend.Controllers
             return await _context.TipoInscripciones.ToListAsync();
         }
 
+        [HttpGet("Deleteds/")]
+        public async Task<ActionResult<IEnumerable<TipoInscripcion>>> GetTipoInscripcionesDeleteds()
+        {
+            return await _context.TipoInscripciones.IgnoreQueryFilters().Where(c => c.IsDeleted).ToListAsync();
+
+        }
         // GET: api/TipoInscripciones/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TipoInscripcion>> GetTipoInscripcion(int id)
@@ -93,13 +99,27 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-
-            _context.TipoInscripciones.Remove(tipoInscripcion);
+            tipoInscripcion.IsDeleted = false;
+            _context.TipoInscripciones.Update(tipoInscripcion);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
+        [HttpPut("restore/{id}")]
+        public async Task<IActionResult> RestoreTipoInscripcion(int id)
+        {
+            var tipoInscripcion = await _context.TipoInscripciones.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id.Equals(id));
+            if (tipoInscripcion == null)
+            {
+                return NotFound();
+            }
+            tipoInscripcion.IsDeleted = false;
+            _context.TipoInscripciones.Update(tipoInscripcion);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
         private bool TipoInscripcionExists(int id)
         {
             return _context.TipoInscripciones.Any(e => e.Id == id);
