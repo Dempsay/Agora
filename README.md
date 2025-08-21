@@ -1,5 +1,3 @@
-18.188.141.17
-
 # 🏛️ Ágora — Plataforma de Gestión de Capacitaciones
 
 ![Estado](https://img.shields.io/badge/estado-en%20desarrollo-yellow) ![Versión](https://img.shields.io/badge/version-0.1.0-blue) ![Hecho por](https://img.shields.io/badge/2do%20Año-Programación-4CAF50)
