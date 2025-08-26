@@ -96,7 +96,7 @@ namespace TestAgora
 
         }
         [Fact]
-        public async void TestGetByIdTipoInstruccion()
+        public async void TestGetByIdTipoInscripcion()
         {
             // Arrange
             var service = new GenericService<TipoInscripcion>();
@@ -110,8 +110,17 @@ namespace TestAgora
             Assert.Equal("Público en general", result.Nombre); // Cambia este valor según el nombre esperado
             Console.WriteLine($"Id: {result.Id}, Nombre: {result.Nombre}");
         }
-
-
-
+        [Fact]
+        public async void TestDeleteInscripcion()
+        {
+            // Arrange
+            var service = new GenericService<Inscripcion>();
+            int idToDelete = 5; // Cambia este valor según un ID válido en tu base de datos
+            // Act
+            var result = await service.DeleteAsync(idToDelete);
+            // Assert
+            Assert.True(result);
+            Console.WriteLine($"Inscripcion con Id {idToDelete} eliminado exitosamente.");
+        }
     }
 }

@@ -28,9 +28,14 @@ namespace Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+           var responce= await _httpClient.DeleteAsync($"{_endpoint}/{id}");
+            if (!responce.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al eliminar el dato: {responce.StatusCode}");
+            }
+            return responce.IsSuccessStatusCode;
         }
 
         public async Task<List<T>?> GetAllAsync(string? filtro)

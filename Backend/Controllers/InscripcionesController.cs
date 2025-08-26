@@ -99,7 +99,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            inscripcion.IsDeleted = false;
+            inscripcion.IsDeleted = true;
             _context.Inscripciones.Update(inscripcion);
             await _context.SaveChangesAsync();
 
