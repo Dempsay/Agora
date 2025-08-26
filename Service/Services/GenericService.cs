@@ -1,16 +1,26 @@
 ﻿using Service.Interfaces;
+using Service.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Service.Services
 {
-    internal class GenericService<T> : IGenericService<T> where T : class
+    public class GenericService<T> : IGenericService<T> where T : class
     {
         private readonly HttpClient _httpClient;
-        public GenericService() { 
+        protected readonly JsonSerializerOptions _options;
+        protected readonly string _endpoint;
+
+
+        public GenericService()
+        {
+            _httpClient = new HttpClient();
+            _options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            _endpoint = Properties.Resources.UrlApi + ApiEndpoints.GetEndpoint(typeof(T).Name);
 
         }
         public Task<T?> AddAsync(T? entity)
@@ -23,17 +33,24 @@ namespace Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<T>?> GetAllAsync(string? filtro)
+        public async Task<List<T>?> GetAllAsync(string? filtro)
+        {
+            var response = await _httpClient.GetAsync(_endpoint);
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al obtener los datos: {response.StatusCode}");
+            }
+            return JsonSerializer.Deserialize<List<T>>(content, _options);
+
+        }
+
+        public Task<List<T>?> GetAllDeletedsAsync(string? filtro)
         {
             throw new NotImplementedException();
         }
 
         public Task<T?> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<T>?> GetDeletedsAllAsync(string? filtro)
         {
             throw new NotImplementedException();
         }

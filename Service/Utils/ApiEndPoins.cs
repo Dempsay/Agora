@@ -11,7 +11,7 @@ namespace Service.Utils
         public static string Capacitacion { get; set; } = "capacitaciones";
         public static string Usuario { get; set; } = "usuarios";
         public static string Inscripcion { get; set; } = "inscripciones";
-        public static string TipoInscipcion { get; set; } = "tiposinscripciones";
+        public static string TipoInscripcion { get; set; } = "tiposinscripciones";
         public static string TipoInscripcionCapacitacion { get; set; } = "tiposinscripcionescapacitaciones";
 
         public static string GetEndpoint(string name)
@@ -21,7 +21,7 @@ namespace Service.Utils
                 nameof(Capacitacion) => Capacitacion,
                 nameof(Usuario) => Usuario,
                 nameof(Inscripcion) => Inscripcion,
-                nameof(TipoInscipcion) => TipoInscipcion,
+                nameof(TipoInscripcion) => TipoInscripcion,
                 nameof(TipoInscripcionCapacitacion) => TipoInscripcionCapacitacion,
 
                 _ => throw new ArgumentException($"Endpoint '{name}' no está definido.")
