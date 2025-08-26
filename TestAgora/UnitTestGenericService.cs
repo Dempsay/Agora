@@ -95,5 +95,23 @@ namespace TestAgora
             }
 
         }
+        [Fact]
+        public async void TestGetByIdTipoInstruccion()
+        {
+            // Arrange
+            var service = new GenericService<TipoInscripcion>();
+            int idToTest = 1; // Cambia este valor según un ID válido en tu base de datos
+            // Act
+            var result = await service.GetByIdAsync(idToTest);
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<TipoInscripcion>(result);
+            Assert.Equal(idToTest, result.Id);
+            Assert.Equal("Público en general", result.Nombre); // Cambia este valor según el nombre esperado
+            Console.WriteLine($"Id: {result.Id}, Nombre: {result.Nombre}");
+        }
+
+
+
     }
 }
