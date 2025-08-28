@@ -21,7 +21,7 @@ namespace Service.Services
         {
             _httpClient = new HttpClient();
             _options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
-            _endpoint = Properties.Resources.UrlApi + ApiEndpoints.GetEndpoint(typeof(T).Name);
+            _endpoint = Properties.Resources.UrlApi + ApiEndpoint.GetEndpoint(typeof(T).Name);
 
         }
         public async Task<T?> AddAsync(T? entity)
@@ -58,7 +58,7 @@ namespace Service.Services
 
         }
 
-        public async Task<List<T>?> GetAllDeletedsAsync(string? filtro)
+        public async Task<List<T>?> GetAllDeletedsAsync()
         {
             var response = await _httpClient.GetAsync($"{_endpoint}/deleteds");
             var content = await response.Content.ReadAsStringAsync();
@@ -80,9 +80,14 @@ namespace Service.Services
             return JsonSerializer.Deserialize<T>(content, _options);
         }
 
-        public Task<bool> RestoreAsync(int id)
+        public async Task<bool> RestoreAsync(int id)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.PutAsync($"{_endpoint}/restore/{id}",null);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al restaurar el dato: {response.StatusCode}");
+            }
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> UpdateAsync(T? entity)

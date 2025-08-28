@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service.Utils
 {
-    public static class ApiEndpoints
+    public static class ApiEndpoint
     {
         public static string Capacitacion { get; set; } = "capacitaciones";
         public static string Usuario { get; set; } = "usuarios";

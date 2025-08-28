@@ -142,12 +142,12 @@ namespace TestAgora
             Console.WriteLine($"Id: {result.Id}, Nombre: {result.Nombre}");
         }
         [Fact]
-        public async void TestDeletedsInscripciones()
+        public async void TestDeletedsCapacitaciones()
         {
             // Arrange
             var service = new GenericService<Capacitacion>();
             // Act
-            var result = await service.GetAllDeletedsAsync(null);
+            var result = await service.GetAllDeletedsAsync();
             // Assert
             Assert.NotNull(result);
             Assert.IsType<List<Capacitacion>>(result);
@@ -161,7 +161,7 @@ namespace TestAgora
         [Fact]
         public async void TestUpdateTipoInscripcion()
         {
-            var service=new GenericService<TipoInscripcion>();
+            var service = new GenericService<TipoInscripcion>();
             var tipoInscripcionAModificar = new TipoInscripcion()
             {
                 Id = 2,
@@ -171,6 +171,18 @@ namespace TestAgora
             //assert
             Assert.NotNull(result);
             Assert.True(result);
+        }
+        [Fact]
+        public async void TestRestoreCapacitacion()
+        {
+            // Arrange
+            var service = new GenericService<Capacitacion>();
+            int idToRestore = 3; // Asumiendo que este ID existe en la base de datos
+                                 // Act
+            var result = await service.RestoreAsync(idToRestore);
+            // Assert
+            Assert.True(result);
+            Console.WriteLine($"Capacitacion con Id {idToRestore} restaurada exitosamente.");
         }
     }
 }
