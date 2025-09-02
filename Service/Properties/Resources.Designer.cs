@@ -79,5 +79,12 @@ namespace Service.Properties
                 return ResourceManager.GetString("UrlApi", resourceCulture);
             }
         }
+        public static string UrlApiLocal
+        {
+            get
+            {
+                return ResourceManager.GetString("UrlApiLocal", resourceCulture);
+            }
+        }
     }
 }
