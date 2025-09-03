@@ -19,13 +19,13 @@ namespace Desktop.Views
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            ProgressBar.Value += 3;
+            ProgressBar.Value += 2;
             if (ProgressBar.Value == 100)
             {
                 Timer.Stop();
                 this.Hide();
-                var menuPrincipalView = new MenuPrincipalView();
-                menuPrincipalView.ShowDialog();
+                var loginView = new LoginView();
+                loginView.ShowDialog();
                 this.Close();
 
 
