@@ -124,7 +124,7 @@
     <value>agora-f2ed2.firebaseapp.com</value>
   </data>
   <data name="UrlApi" xml:space="preserve">
-    <value>https://apiagoradani.azurewebsites.net/api/</value>
+    <value>https://apiagoradani-f8e2a0hecgfmeads.canadacentral-01.azurewebsites.net/api</value>
   </data>
   <data name="UrlApiLocal" xml:space="preserve">
     <value>https://localhost:7250/api/</value>

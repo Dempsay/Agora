@@ -79,7 +79,7 @@ namespace Service.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a https://apiagoradani.azurewebsites.net/api/.
+        ///   Busca una cadena traducida similar a https://apiagoradani-f8e2a0hecgfmeads.canadacentral-01.azurewebsites.net/api.
         /// </summary>
         public static string UrlApi {
             get {
