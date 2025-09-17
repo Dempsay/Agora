@@ -32,7 +32,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins",
         builder => builder
-            .WithOrigins("https://localhost:8000", "https://agoraluci.azurewebsites.net")
+            .WithOrigins("https://localhost:8000", "https://agoradani.azurewebsites.net")
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
