@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Threading.Tasks;
 using Service.Models;
 using Service.Services;
 
@@ -165,16 +166,16 @@ namespace Desktop.Views
             }
         }
 
-        private void BtnBuscar_Click(object sender, EventArgs e)
+        private async void BtnBuscar_Click(object sender, EventArgs e)
         {
-              DataGrid.DataSource = _capacitaciones.Where(p => p.Nombre.ToUpper().Contains(TxtBuscar.Text.ToUpper())).ToList();
+              DataGrid.DataSource = await _capacitacionService.GetAllAsync(TxtBuscar.Text);
         }
 
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
-            {
-                BtnBuscar.PerformClick();
-            }
+            
+               // BtnBuscar.PerformClick();
+            
         }
 
         private void TimerStatusBar_Tick(object sender, EventArgs e)
