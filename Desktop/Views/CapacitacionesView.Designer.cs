@@ -31,23 +31,28 @@
             components = new System.ComponentModel.Container();
             TabControl = new TabControl();
             TabPageLista = new TabPage();
+            BtnRestaurar = new FontAwesome.Sharp.IconButton();
+            CheckVerEliminados = new CheckBox();
             BtnBuscar = new FontAwesome.Sharp.IconButton();
             TxtBuscar = new TextBox();
             label2 = new Label();
             FilmPicture = new PictureBox();
             BtnSalir = new FontAwesome.Sharp.IconButton();
-            GridPeliculas = new DataGridView();
+            DataGrid = new DataGridView();
             BtnEliminar = new FontAwesome.Sharp.IconButton();
             BtnAgregar = new FontAwesome.Sharp.IconButton();
             BtnModificar = new FontAwesome.Sharp.IconButton();
             TabPageAgregarEditar = new TabPage();
+            checkInscripcionAbierta = new CheckBox();
+            label7 = new Label();
+            DateTimeFechaHora = new DateTimePicker();
+            TxtPonente = new TextBox();
             label6 = new Label();
-            NumericCalificacion = new NumericUpDown();
             label5 = new Label();
-            NumericDuracion = new NumericUpDown();
-            TxtPortada = new TextBox();
+            NumericCupo = new NumericUpDown();
+            TxtDetalle = new TextBox();
             label4 = new Label();
-            TxtTitulo = new TextBox();
+            TxtNombre = new TextBox();
             label3 = new Label();
             BtnCancelar = new FontAwesome.Sharp.IconButton();
             BtnGuardar = new FontAwesome.Sharp.IconButton();
@@ -59,10 +64,9 @@
             TabControl.SuspendLayout();
             TabPageLista.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)FilmPicture).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)GridPeliculas).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DataGrid).BeginInit();
             TabPageAgregarEditar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)NumericCalificacion).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)NumericDuracion).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)NumericCupo).BeginInit();
             panel1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -80,12 +84,14 @@
             // 
             // TabPageLista
             // 
+            TabPageLista.Controls.Add(BtnRestaurar);
+            TabPageLista.Controls.Add(CheckVerEliminados);
             TabPageLista.Controls.Add(BtnBuscar);
             TabPageLista.Controls.Add(TxtBuscar);
             TabPageLista.Controls.Add(label2);
             TabPageLista.Controls.Add(FilmPicture);
             TabPageLista.Controls.Add(BtnSalir);
-            TabPageLista.Controls.Add(GridPeliculas);
+            TabPageLista.Controls.Add(DataGrid);
             TabPageLista.Controls.Add(BtnEliminar);
             TabPageLista.Controls.Add(BtnAgregar);
             TabPageLista.Controls.Add(BtnModificar);
@@ -98,6 +104,30 @@
             TabPageLista.Text = "Lista";
             TabPageLista.UseVisualStyleBackColor = true;
             // 
+            // BtnRestaurar
+            // 
+            BtnRestaurar.IconChar = FontAwesome.Sharp.IconChar.None;
+            BtnRestaurar.IconColor = Color.Black;
+            BtnRestaurar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            BtnRestaurar.Location = new Point(842, 257);
+            BtnRestaurar.Name = "BtnRestaurar";
+            BtnRestaurar.Size = new Size(107, 44);
+            BtnRestaurar.TabIndex = 6;
+            BtnRestaurar.Text = "Restaurar";
+            BtnRestaurar.UseVisualStyleBackColor = true;
+            BtnRestaurar.Click += BtnRestaurar_Click;
+            // 
+            // CheckVerEliminados
+            // 
+            CheckVerEliminados.AutoSize = true;
+            CheckVerEliminados.Location = new Point(655, 16);
+            CheckVerEliminados.Name = "CheckVerEliminados";
+            CheckVerEliminados.Size = new Size(129, 24);
+            CheckVerEliminados.TabIndex = 1;
+            CheckVerEliminados.Text = "Ver eliminados";
+            CheckVerEliminados.UseVisualStyleBackColor = true;
+            CheckVerEliminados.CheckedChanged += CheckVerEliminados_CheckedChanged;
+            // 
             // BtnBuscar
             // 
             BtnBuscar.Anchor = AnchorStyles.Bottom;
@@ -109,7 +139,7 @@
             BtnBuscar.Margin = new Padding(2);
             BtnBuscar.Name = "BtnBuscar";
             BtnBuscar.Size = new Size(109, 43);
-            BtnBuscar.TabIndex = 15;
+            BtnBuscar.TabIndex = 2;
             BtnBuscar.Text = "&Buscar";
             BtnBuscar.TextAlign = ContentAlignment.MiddleRight;
             BtnBuscar.UseVisualStyleBackColor = true;
@@ -117,11 +147,11 @@
             // 
             // TxtBuscar
             // 
-            TxtBuscar.Location = new Point(68, 18);
+            TxtBuscar.Location = new Point(64, 14);
             TxtBuscar.Margin = new Padding(2);
             TxtBuscar.Name = "TxtBuscar";
-            TxtBuscar.Size = new Size(762, 27);
-            TxtBuscar.TabIndex = 14;
+            TxtBuscar.Size = new Size(548, 27);
+            TxtBuscar.TabIndex = 0;
             TxtBuscar.TextChanged += TxtBuscar_TextChanged;
             // 
             // label2
@@ -155,29 +185,29 @@
             BtnSalir.Margin = new Padding(2);
             BtnSalir.Name = "BtnSalir";
             BtnSalir.Size = new Size(109, 41);
-            BtnSalir.TabIndex = 11;
+            BtnSalir.TabIndex = 7;
             BtnSalir.Text = "Salir";
             BtnSalir.TextAlign = ContentAlignment.MiddleRight;
             BtnSalir.UseVisualStyleBackColor = true;
             BtnSalir.Click += BtnSalir_Click;
             // 
-            // GridPeliculas
+            // DataGrid
             // 
-            GridPeliculas.AllowUserToAddRows = false;
-            GridPeliculas.AllowUserToDeleteRows = false;
-            GridPeliculas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            GridPeliculas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            GridPeliculas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            GridPeliculas.Location = new Point(5, 50);
-            GridPeliculas.Margin = new Padding(2);
-            GridPeliculas.MultiSelect = false;
-            GridPeliculas.Name = "GridPeliculas";
-            GridPeliculas.ReadOnly = true;
-            GridPeliculas.RowHeadersWidth = 62;
-            GridPeliculas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            GridPeliculas.Size = new Size(607, 306);
-            GridPeliculas.TabIndex = 7;
-            GridPeliculas.SelectionChanged += GridPeliculas_SelectionChanged_1;
+            DataGrid.AllowUserToAddRows = false;
+            DataGrid.AllowUserToDeleteRows = false;
+            DataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            DataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            DataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DataGrid.Location = new Point(5, 50);
+            DataGrid.Margin = new Padding(2);
+            DataGrid.MultiSelect = false;
+            DataGrid.Name = "DataGrid";
+            DataGrid.ReadOnly = true;
+            DataGrid.RowHeadersWidth = 62;
+            DataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            DataGrid.Size = new Size(607, 306);
+            DataGrid.TabIndex = 7;
+            DataGrid.SelectionChanged += GridPeliculas_SelectionChanged_1;
             // 
             // BtnEliminar
             // 
@@ -190,7 +220,7 @@
             BtnEliminar.Margin = new Padding(2);
             BtnEliminar.Name = "BtnEliminar";
             BtnEliminar.Size = new Size(109, 42);
-            BtnEliminar.TabIndex = 10;
+            BtnEliminar.TabIndex = 5;
             BtnEliminar.Text = "&Eliminar";
             BtnEliminar.TextAlign = ContentAlignment.MiddleRight;
             BtnEliminar.UseVisualStyleBackColor = true;
@@ -207,7 +237,7 @@
             BtnAgregar.Margin = new Padding(2);
             BtnAgregar.Name = "BtnAgregar";
             BtnAgregar.Size = new Size(109, 43);
-            BtnAgregar.TabIndex = 8;
+            BtnAgregar.TabIndex = 3;
             BtnAgregar.Text = "&Agregar";
             BtnAgregar.TextAlign = ContentAlignment.MiddleRight;
             BtnAgregar.UseVisualStyleBackColor = true;
@@ -224,7 +254,7 @@
             BtnModificar.Margin = new Padding(2);
             BtnModificar.Name = "BtnModificar";
             BtnModificar.Size = new Size(109, 40);
-            BtnModificar.TabIndex = 9;
+            BtnModificar.TabIndex = 4;
             BtnModificar.Text = "&Modificar";
             BtnModificar.TextAlign = ContentAlignment.MiddleRight;
             BtnModificar.UseVisualStyleBackColor = true;
@@ -232,13 +262,16 @@
             // 
             // TabPageAgregarEditar
             // 
+            TabPageAgregarEditar.Controls.Add(checkInscripcionAbierta);
+            TabPageAgregarEditar.Controls.Add(label7);
+            TabPageAgregarEditar.Controls.Add(DateTimeFechaHora);
+            TabPageAgregarEditar.Controls.Add(TxtPonente);
             TabPageAgregarEditar.Controls.Add(label6);
-            TabPageAgregarEditar.Controls.Add(NumericCalificacion);
             TabPageAgregarEditar.Controls.Add(label5);
-            TabPageAgregarEditar.Controls.Add(NumericDuracion);
-            TabPageAgregarEditar.Controls.Add(TxtPortada);
+            TabPageAgregarEditar.Controls.Add(NumericCupo);
+            TabPageAgregarEditar.Controls.Add(TxtDetalle);
             TabPageAgregarEditar.Controls.Add(label4);
-            TabPageAgregarEditar.Controls.Add(TxtTitulo);
+            TabPageAgregarEditar.Controls.Add(TxtNombre);
             TabPageAgregarEditar.Controls.Add(label3);
             TabPageAgregarEditar.Controls.Add(BtnCancelar);
             TabPageAgregarEditar.Controls.Add(BtnGuardar);
@@ -251,80 +284,110 @@
             TabPageAgregarEditar.Text = "Agregar/Editar";
             TabPageAgregarEditar.UseVisualStyleBackColor = true;
             // 
+            // checkInscripcionAbierta
+            // 
+            checkInscripcionAbierta.AutoSize = true;
+            checkInscripcionAbierta.Location = new Point(175, 284);
+            checkInscripcionAbierta.Name = "checkInscripcionAbierta";
+            checkInscripcionAbierta.Size = new Size(155, 24);
+            checkInscripcionAbierta.TabIndex = 5;
+            checkInscripcionAbierta.Text = "Inscripcion Abierta";
+            checkInscripcionAbierta.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(67, 196);
+            label7.Margin = new Padding(2, 0, 2, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(98, 20);
+            label7.TabIndex = 23;
+            label7.Text = "Fecha y Hora:";
+            // 
+            // DateTimeFechaHora
+            // 
+            DateTimeFechaHora.CustomFormat = "dd/MM/yyyy  HH:mm";
+            DateTimeFechaHora.Format = DateTimePickerFormat.Custom;
+            DateTimeFechaHora.Location = new Point(175, 190);
+            DateTimeFechaHora.Name = "DateTimeFechaHora";
+            DateTimeFechaHora.ShowUpDown = true;
+            DateTimeFechaHora.Size = new Size(242, 27);
+            DateTimeFechaHora.TabIndex = 3;
+            // 
+            // TxtPonente
+            // 
+            TxtPonente.ForeColor = Color.Black;
+            TxtPonente.Location = new Point(175, 143);
+            TxtPonente.Margin = new Padding(2);
+            TxtPonente.Name = "TxtPonente";
+            TxtPonente.Size = new Size(718, 27);
+            TxtPonente.TabIndex = 2;
+            // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(85, 229);
+            label6.Location = new Point(106, 148);
             label6.Margin = new Padding(2, 0, 2, 0);
             label6.Name = "label6";
-            label6.Size = new Size(89, 20);
-            label6.TabIndex = 21;
-            label6.Text = "Calificación:";
-            // 
-            // NumericCalificacion
-            // 
-            NumericCalificacion.DecimalPlaces = 2;
-            NumericCalificacion.Location = new Point(175, 229);
-            NumericCalificacion.Margin = new Padding(2);
-            NumericCalificacion.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
-            NumericCalificacion.Name = "NumericCalificacion";
-            NumericCalificacion.Size = new Size(144, 27);
-            NumericCalificacion.TabIndex = 20;
+            label6.Size = new Size(59, 20);
+            label6.TabIndex = 20;
+            label6.Text = "Orador:";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(26, 171);
+            label5.Location = new Point(118, 244);
             label5.Margin = new Padding(2, 0, 2, 0);
             label5.Name = "label5";
-            label5.Size = new Size(149, 20);
+            label5.Size = new Size(47, 20);
             label5.TabIndex = 19;
-            label5.Text = "Duración en minutos:";
+            label5.Text = "Cupo:";
             // 
-            // NumericDuracion
+            // NumericCupo
             // 
-            NumericDuracion.Location = new Point(175, 171);
-            NumericDuracion.Margin = new Padding(2);
-            NumericDuracion.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            NumericDuracion.Name = "NumericDuracion";
-            NumericDuracion.Size = new Size(144, 27);
-            NumericDuracion.TabIndex = 18;
+            NumericCupo.Location = new Point(175, 237);
+            NumericCupo.Margin = new Padding(2);
+            NumericCupo.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            NumericCupo.Name = "NumericCupo";
+            NumericCupo.Size = new Size(144, 27);
+            NumericCupo.TabIndex = 4;
+            NumericCupo.TextAlign = HorizontalAlignment.Right;
             // 
-            // TxtPortada
+            // TxtDetalle
             // 
-            TxtPortada.Location = new Point(175, 107);
-            TxtPortada.Margin = new Padding(2);
-            TxtPortada.Name = "TxtPortada";
-            TxtPortada.Size = new Size(718, 27);
-            TxtPortada.TabIndex = 17;
+            TxtDetalle.Location = new Point(175, 96);
+            TxtDetalle.Margin = new Padding(2);
+            TxtDetalle.Name = "TxtDetalle";
+            TxtDetalle.Size = new Size(718, 27);
+            TxtDetalle.TabIndex = 1;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(106, 110);
+            label4.Location = new Point(105, 100);
             label4.Margin = new Padding(2, 0, 2, 0);
             label4.Name = "label4";
-            label4.Size = new Size(63, 20);
+            label4.Size = new Size(60, 20);
             label4.TabIndex = 16;
-            label4.Text = "Portada:";
+            label4.Text = "Detalle:";
             // 
-            // TxtTitulo
+            // TxtNombre
             // 
-            TxtTitulo.Location = new Point(175, 49);
-            TxtTitulo.Margin = new Padding(2);
-            TxtTitulo.Name = "TxtTitulo";
-            TxtTitulo.Size = new Size(718, 27);
-            TxtTitulo.TabIndex = 15;
+            TxtNombre.Location = new Point(175, 49);
+            TxtNombre.Margin = new Padding(2);
+            TxtNombre.Name = "TxtNombre";
+            TxtNombre.Size = new Size(718, 27);
+            TxtNombre.TabIndex = 0;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(120, 54);
+            label3.Location = new Point(98, 52);
             label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new Size(50, 20);
-            label3.TabIndex = 11;
-            label3.Text = "Título:";
+            label3.Size = new Size(67, 20);
+            label3.TabIndex = 6;
+            label3.Text = "Nombre:";
             // 
             // BtnCancelar
             // 
@@ -337,7 +400,7 @@
             BtnCancelar.Margin = new Padding(2);
             BtnCancelar.Name = "BtnCancelar";
             BtnCancelar.Size = new Size(109, 43);
-            BtnCancelar.TabIndex = 10;
+            BtnCancelar.TabIndex = 7;
             BtnCancelar.Text = "&Cancelar";
             BtnCancelar.TextAlign = ContentAlignment.MiddleRight;
             BtnCancelar.UseVisualStyleBackColor = true;
@@ -354,7 +417,7 @@
             BtnGuardar.Margin = new Padding(2);
             BtnGuardar.Name = "BtnGuardar";
             BtnGuardar.Size = new Size(109, 43);
-            BtnGuardar.TabIndex = 9;
+            BtnGuardar.TabIndex = 6;
             BtnGuardar.Text = "&Guardar";
             BtnGuardar.TextAlign = ContentAlignment.MiddleRight;
             BtnGuardar.UseVisualStyleBackColor = true;
@@ -368,7 +431,7 @@
             panel1.Location = new Point(-2, -2);
             panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(996, 63);
+            panel1.Size = new Size(1007, 63);
             panel1.TabIndex = 7;
             // 
             // label1
@@ -385,10 +448,10 @@
             // 
             statusStrip1.ImageScalingSize = new Size(24, 24);
             statusStrip1.Items.AddRange(new ToolStripItem[] { LabelStatusMessage });
-            statusStrip1.Location = new Point(0, 479);
+            statusStrip1.Location = new Point(0, 478);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new Padding(1, 0, 11, 0);
-            statusStrip1.Size = new Size(992, 22);
+            statusStrip1.Size = new Size(1003, 22);
             statusStrip1.TabIndex = 8;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -406,7 +469,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(992, 501);
+            ClientSize = new Size(1003, 500);
             Controls.Add(statusStrip1);
             Controls.Add(panel1);
             Controls.Add(TabControl);
@@ -418,11 +481,10 @@
             TabPageLista.ResumeLayout(false);
             TabPageLista.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)FilmPicture).EndInit();
-            ((System.ComponentModel.ISupportInitialize)GridPeliculas).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DataGrid).EndInit();
             TabPageAgregarEditar.ResumeLayout(false);
             TabPageAgregarEditar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)NumericCalificacion).EndInit();
-            ((System.ComponentModel.ISupportInitialize)NumericDuracion).EndInit();
+            ((System.ComponentModel.ISupportInitialize)NumericCupo).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             statusStrip1.ResumeLayout(false);
@@ -439,7 +501,7 @@
         private Label label1;
         private PictureBox FilmPicture;
         private FontAwesome.Sharp.IconButton BtnSalir;
-        private DataGridView GridPeliculas;
+        private DataGridView DataGrid;
         private FontAwesome.Sharp.IconButton BtnEliminar;
         private FontAwesome.Sharp.IconButton BtnAgregar;
         private FontAwesome.Sharp.IconButton BtnModificar;
@@ -448,16 +510,21 @@
         private TextBox TxtBuscar;
         private FontAwesome.Sharp.IconButton BtnCancelar;
         private FontAwesome.Sharp.IconButton BtnGuardar;
-        private TextBox TxtPortada;
+        private TextBox TxtDetalle;
         private Label label4;
-        private TextBox TxtTitulo;
+        private TextBox TxtNombre;
         private Label label3;
         private Label label5;
-        private NumericUpDown NumericDuracion;
-        private Label label6;
-        private NumericUpDown NumericCalificacion;
+        private NumericUpDown NumericCupo;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel LabelStatusMessage;
         private System.Windows.Forms.Timer TimerStatusBar;
+        private CheckBox CheckVerEliminados;
+        private FontAwesome.Sharp.IconButton BtnRestaurar;
+        private TextBox TxtPonente;
+        private Label label6;
+        private Label label7;
+        private DateTimePicker DateTimeFechaHora;
+        private CheckBox checkInscripcionAbierta;
     }
 }

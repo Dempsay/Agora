@@ -13,20 +13,39 @@ namespace Desktop.Views
         public CapacitacionesView()
         {
             InitializeComponent();
-            _=GetAllData();
-        }
+            _ = GetAllData();
+            CheckVerEliminados.CheckedChanged += DisplayHideControlsRestoreButton; ;
 
+        }
+        //ocultamos los botones cuando el checkbox cambia pero que no este relacionado con el evento del checkbox
+        private void DisplayHideControlsRestoreButton(object sender, EventArgs e)
+        {
+            BtnRestaurar.Visible = CheckVerEliminados.Checked;
+            BtnEliminar.Enabled = !CheckVerEliminados.Checked;
+            BtnModificar.Enabled = !CheckVerEliminados.Checked;
+            BtnAgregar.Enabled = !CheckVerEliminados.Checked;
+            BtnModificar.Enabled = !CheckVerEliminados.Checked;
+            BtnBuscar.Enabled = !CheckVerEliminados.Checked;
+
+        }
         private async Task GetAllData()
         {
-            _capacitaciones = await _capacitacionService.GetAllAsync();
-            GridPeliculas.DataSource = _capacitaciones;
-            GridPeliculas.Columns["id"].Visible = false;
-            GridPeliculas.Columns["IsDeleted"].Visible = false;
+            if (CheckVerEliminados.Checked)
+            {
+                _capacitaciones = await _capacitacionService.GetAllDeletedsAsync();
+            }
+            else
+            {
+                _capacitaciones = await _capacitacionService.GetAllAsync();
+            }
+            DataGrid.DataSource = _capacitaciones;
+            DataGrid.Columns["Id"].Visible = false;
+            DataGrid.Columns["IsDeleted"].Visible = false;
         }
 
         private void GridPeliculas_SelectionChanged_1(object sender, EventArgs e)
         {
-            if (GridPeliculas.RowCount > 0 && GridPeliculas.SelectedRows.Count > 0)
+            if (DataGrid.RowCount > 0 && DataGrid.SelectedRows.Count > 0)
             {
                 //Capacitacion _curr = (Pelicula)GridPeliculas.SelectedRows[0].DataBoundItem;
                 //FilmPicture.ImageLocation = peliSeleccionada.portada;
@@ -36,9 +55,9 @@ namespace Desktop.Views
         private async void BtnEliminar_Click_1(object sender, EventArgs e)
         {
             //checheamos que haya peliculas seleccionadas
-            if (GridPeliculas.RowCount > 0 && GridPeliculas.SelectedRows.Count > 0)
+            if (DataGrid.RowCount > 0 && DataGrid.SelectedRows.Count > 0)
             {
-                Capacitacion entitySelected = (Capacitacion)GridPeliculas.SelectedRows[0].DataBoundItem;
+                Capacitacion entitySelected = (Capacitacion)DataGrid.SelectedRows[0].DataBoundItem;
                 var respuesta = MessageBox.Show($"¿Seguro que desea eliminar la Capacitacion {entitySelected.Nombre}?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (respuesta == DialogResult.Yes)
                 {
@@ -68,81 +87,91 @@ namespace Desktop.Views
         private void BtnAgregar_Click(object sender, EventArgs e)
         {
             LimpiarControlesAgregarEditar();
-            TabControl.SelectTab("TabPageAgregarEditar");
+            TabControl.SelectedTab = TabPageAgregarEditar;
         }
 
         private void LimpiarControlesAgregarEditar()
         {
-            TxtTitulo.Clear();
-            NumericDuracion.Value = 0;
-            TxtPortada.Clear();
-            NumericCalificacion.Value = 0;
+            TxtNombre.Clear();
+            TxtPonente.Clear();
+            DateTimeFechaHora.Value = DateTime.Now;
+            checkInscripcionAbierta.Checked = false;
+            NumericCupo.Value = 0;
+            TxtDetalle.Clear();
         }
 
         private void BtnCancelar_Click(object sender, EventArgs e)
         {
-            TabControl.SelectTab("TabPageLista");
+            TabControl.SelectedTab = TabPageLista;
 
         }
 
         private async void BtnGuardar_Click(object sender, EventArgs e)
         {
-            //Pelicula peliculaAGuardar = new Pelicula
-            //{
-            //    id = peliculaModificada?.id??null, 
-            //    titulo = TxtTitulo.Text,
-            //    duracion = (int)NumericDuracion.Value,
-            //    portada = TxtPortada.Text,
-            //    calificacion = (double)NumericCalificacion.Value
-         //   };
+            Capacitacion capacitacionAGuardar = new Capacitacion
+            {
+                Id = _currentCapacitacion?.Id?? 0, 
+                Nombre = TxtNombre.Text,
+                Detalle = TxtDetalle.Text,
+                Ponente = TxtPonente.Text,
+                FechaHora = DateTimeFechaHora.Value,
+                Cupo = (int)NumericCupo.Value,
+                InscripcionAbierta = checkInscripcionAbierta.Checked
 
-         //   bool response;
-         //   if (peliculaModificada != null)
-         //   {
-         //       response=await peliculaService.UpdateAsync(peliculaAGuardar);
-         //   }
-         //   else
-         //   {
-         //       response = await peliculaService.AddAsync(peliculaAGuardar);
-         //   }
-         //   if (response)
-         //   {
-         //       peliculaModificada = null; // Reset the modified movie after saving
-         //       LabelStatusMessage.Text = "Pelicula guardada correctamente";
-         //       TimerStatusBar.Start(); // Iniciar el temporizador para mostrar el mensaje en la barra de estado
-         //       ObtenemosPeliculas();
-         //       LimpiarControlesAgregarEditar();
-         //       TabControl.SelectTab("TabPageLista");
-         //   }
-         //   else
-         //   {
-         //       MessageBox.Show("Error al agregar la pelicula", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-         //   }
+            };
+            bool response = false;
+            if (_currentCapacitacion != null)
+            {
+                 response = await _capacitacionService.UpdateAsync(capacitacionAGuardar);
+            }
+            else
+            {
+               var nuevacapacitacion = await _capacitacionService.AddAsync(capacitacionAGuardar);
+                response = nuevacapacitacion != null;
+            }
+            if (response)
+            {
+                _currentCapacitacion = null; // Reset the modified movie after saving
+                LabelStatusMessage.Text = $"Capacitacion {capacitacionAGuardar.Nombre} guardada correctamente";
+                TimerStatusBar.Start(); // Iniciar el temporizador para mostrar el mensaje en la barra de estado
+                await GetAllData();
+                LimpiarControlesAgregarEditar();
+                TabControl.SelectedTab=TabPageLista;
+            }
+            else
+            {
+                MessageBox.Show("Error al agregar la capacitacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BtnModificar_Click(object sender, EventArgs e)
         {
-            //checheamos que haya peliculas seleccionadas
-           // if (GridPeliculas.RowCount > 0 && GridPeliculas.SelectedRows.Count > 0)
-           // {
-           //     peliculaModificada = (Pelicula)GridPeliculas.SelectedRows[0].DataBoundItem;
-           //     TxtTitulo.Text = peliculaModificada.titulo;
-           //     NumericDuracion.Value = peliculaModificada.duracion;
-           //     TxtPortada.Text = peliculaModificada.portada;
-           //     NumericCalificacion.Value = (decimal)peliculaModificada.calificacion;
-           //     TabControl.SelectTab("TabPageAgregarEditar");
-           // }
+            //checheamos que haya capacitacion seleccionadas
+             if (DataGrid.RowCount > 0 && DataGrid.SelectedRows.Count > 0)
+            {
+                _currentCapacitacion = (Capacitacion)DataGrid.SelectedRows[0].DataBoundItem;
+                TxtNombre.Text = _currentCapacitacion.Nombre;
+                TxtDetalle.Text = _currentCapacitacion.Detalle;
+                TxtPonente.Text = _currentCapacitacion.Ponente;
+                DateTimeFechaHora.Value = _currentCapacitacion.FechaHora;
+                NumericCupo.Value = _currentCapacitacion.Cupo;
+                checkInscripcionAbierta.Checked = _currentCapacitacion.InscripcionAbierta;
+                TabControl.SelectedTab = TabPageAgregarEditar;
+                
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar una Capacitacion para modificarla", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
-          //  GridPeliculas.DataSource = peliculas.Where(p => p.titulo.ToUpper().Contains(TxtBuscar.Text.ToUpper()))
-          //      .ToList();
+              DataGrid.DataSource = _capacitaciones.Where(p => p.Nombre.ToUpper().Contains(TxtBuscar.Text.ToUpper())).ToList();
         }
 
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TxtBuscar.Text))
             {
                 BtnBuscar.PerformClick();
             }
@@ -152,6 +181,39 @@ namespace Desktop.Views
         {
             LabelStatusMessage.Text = string.Empty;
             TimerStatusBar.Stop(); // Detener el temporizador después de mostrar el mensaje
+        }
+
+        private async void CheckVerEliminados_CheckedChanged(object sender, EventArgs e)
+        {
+            await GetAllData();
+        }
+
+        private async void BtnRestaurar_Click(object sender, EventArgs e)
+        {
+            if (!CheckVerEliminados.Checked) return;
+            //chequeamos que haya películas seleccionadas
+            if (DataGrid.Rows.Count > 0 && DataGrid.SelectedRows.Count > 0)
+            {
+                Capacitacion entitySelected = (Capacitacion)DataGrid.SelectedRows[0].DataBoundItem;
+                var respuesta = MessageBox.Show($"¿Está seguro de recuperar la capacitación {entitySelected.Nombre} seleccionada?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (respuesta == DialogResult.Yes)
+                {
+                    if (await _capacitacionService.RestoreAsync(entitySelected.Id))
+                    {
+                        LabelStatusMessage.Text = $"Capacitación {entitySelected.Nombre} restaurada correctamente";
+                        TimerStatusBar.Start();
+                        await GetAllData();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al restaurar la capacitacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar una capacitación para restaurar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
