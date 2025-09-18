@@ -1,8 +1,7 @@
-﻿@page "/signin"
-
+﻿@page "/singin"
 @inject SweetAlertService sweetAlert
 @inject FirebaseAuthService firebaseAuthService
-@inject NavigationManager NavigationManager
+@inject NavigationManager navigationManager
 
 <div class="card text-center">
     <div class="card-header">
@@ -46,7 +45,7 @@
         </form>
     </div>
     <div class="card-footer text-body-secondary">
-        Kiosco Informático
+        Club Social Cosmopolita
     </div>
 </div>
 
@@ -69,7 +68,7 @@
             return;
         }
         var result = await firebaseAuthService.createUserWithEmailAndPassword(email, password, name);
-        if (result!=null)
+        if (result != null)
         {
             await sweetAlert.FireAsync("Éxito", "Usuario registrado correctamente.", SweetAlertIcon.Success);
             // Limpiar los campos después del registro exitoso
@@ -77,12 +76,11 @@
             email = string.Empty;
             password = string.Empty;
             passwordverify = string.Empty;
-            NavigationManager.NavigateTo("/login");
+            navigationManager.NavigateTo("/login");
         }
         else
         {
-            await sweetAlert.FireAsync("Error", "Error al registrar el usuario:", SweetAlertIcon.Error);
+            await sweetAlert.FireAsync("Error", "Error al registrar el usuario", SweetAlertIcon.Error);
         }
     }
-
 }

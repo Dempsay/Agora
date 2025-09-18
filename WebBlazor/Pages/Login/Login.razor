@@ -1,9 +1,9 @@
 ﻿@page "/login"
 
-@inject FirebaseAuthService firebaseAuthService
+@inject FirebaseAuthService _firebaseAuthService
 @inject IJSRuntime JS
-@inject SweetAlertService sweetAlert
-@inject NavigationManager NavigationManager
+@inject SweetAlertService _sweetAlert
+@inject NavigationManager _navigationManager
 
 
 @if (!isAuthenticated)
@@ -69,15 +69,20 @@ else
 
     private async Task Loguear()
     {
-        var user = await firebaseAuthService.SignInWithEmailPassword(email, password);
+        var user = await _firebaseAuthService.SignInWithEmailPassword(email, password);
         if (user != null)
         {
+            if (user.EmailVerified == false)
+            {
+                await _sweetAlert.FireAsync("Verificación de correo", "Por favor, verifica tu correo electrónico antes de iniciar sesión.", SweetAlertIcon.Warning);
+                return;
+            }
             isAuthenticated = true;
             StateHasChanged();
         }
         else
         {
-            await sweetAlert.FireAsync("ERROR", "Verifique sus credenciales.", SweetAlertIcon.Error);
+            await _sweetAlert.FireAsync("ERROR", "Verifique sus credenciales.", SweetAlertIcon.Error);
         }
     }
 
@@ -86,12 +91,12 @@ else
         isAuthenticated = false;
         email = string.Empty;
         password = string.Empty;
-        await firebaseAuthService.SignOut();
+        await _firebaseAuthService.SignOut();
         StateHasChanged();
     }
 
     private async Task RegisterMe()
     {
-        NavigationManager.NavigateTo("/singin");
+        _navigationManager.NavigateTo("/singin");
     }
 }
