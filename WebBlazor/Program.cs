@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Service.Interfaces;
 using Service.Services;
 using WebBlazor;
-using WebBlazor.Pages.Services;
 using CurrieTechnologies.Razor.SweetAlert2;
+using WebBlazor.Pages.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 

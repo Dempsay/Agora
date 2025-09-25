@@ -22,8 +22,8 @@
     </div>
 
     <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
+        Te bailó tacticamente un ERROR.
+        <a href="" class="reload">Recargar</a>
         <a class="dismiss">🗙</a>
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -71,7 +71,8 @@
                     return userCredential.user.uid;
 
 
-                } catch (error) {
+                }
+                catch (error) {
                     console.error("Error en autenticación:", error.message);
                     return null;
                 }
