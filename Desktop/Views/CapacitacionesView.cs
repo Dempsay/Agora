@@ -15,7 +15,7 @@ namespace Desktop.Views
         {
             InitializeComponent();
             _ = GetAllData();
-            CheckVerEliminados.CheckedChanged += DisplayHideControlsRestoreButton; ;
+            CheckVerEliminados.CheckedChanged += DisplayHideControlsRestoreButton;
 
         }
         //ocultamos los botones cuando el checkbox cambia pero que no este relacionado con el evento del checkbox
