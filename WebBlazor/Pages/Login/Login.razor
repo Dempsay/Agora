@@ -1,10 +1,7 @@
 ﻿@page "/login"
-@using WebBlazor.Pages.Services
 @inject FirebaseAuthService _firebaseAuthService
-@inject IJSRuntime JS
 @inject SweetAlertService _sweetAlert
 @inject NavigationManager _navigationManager
-
 
 @if (!isAuthenticated)
 {
@@ -13,7 +10,7 @@
             Iniciar sesión
         </div>
         <div class="card-body">
-            <h3 class="card-title">Bienvenido a Ágora</h3>
+            <h3 class="card-title">Bienvenido a Agora</h3>
             <div class="container">
                 <div class="row mb-3">
                     <div class="col-md-12 d-flex justify-content-center align-items-center">
@@ -40,7 +37,7 @@
             </div>
         </div>
         <div class="card-footer text-body-secondary">
-            Desarrollo 2do año - TSDS - 2025
+            Desarrollo de 2do año - TSDS - 2025
         </div>
     </div>
 }
@@ -56,25 +53,32 @@ else
             <button class="btn btn-primary" @onclick="Desloguear">Cerrar sesión</button>
         </div>
         <div class="card-footer text-body-secondary">
-            Desarrollo 2do año - TSDS - 2025
+            Desarrollo de 2do año - TSDS - 2025 
         </div>
     </div>
 }
 
-@code
+@code 
 {
     bool isAuthenticated = false;
     string email = string.Empty;
     string password = string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
         isAuthenticated = await _firebaseAuthService.IsUserAuthenticated();
     }
+
     private async Task Loguear()
     {
         var user = await _firebaseAuthService.SignInWithEmailPassword(email, password);
         if (user != null)
         {
+            if(user.EmailVerified == false)
+            {
+                await _sweetAlert.FireAsync("ATENCIÓN", "Por favor, verifique su correo electrónico antes de iniciar sesión.", SweetAlertIcon.Warning);
+                return;
+            }
             isAuthenticated = true;
             StateHasChanged();
         }

@@ -1,5 +1,4 @@
-﻿
-using Service.Interfaces;
+﻿using Service.Interfaces;
 using Service.Utils;
 using System;
 using System.Collections.Generic;
@@ -23,12 +22,12 @@ namespace Service.Services
             _httpClient = new HttpClient();
             _options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
             _endpoint = Properties.Resources.UrlApi + ApiEndpoint.GetEndpoint(typeof(T).Name);
-            //_endpoint = Properties.Resources.UrlApiLocal+ApiEndpoints.GetEndpoint(typeof(T).Name);
+            //_endpoint = Properties.Resources.UrlApiLocal+ApiEndpoint.GetEndpoint(typeof(T).Name);
         }
 
-        public async Task<List<T>?> GetAllAsync(string? filtro="")
+        public async Task<List<T>?> GetAllAsync(string? filtro = "")
         {
-            var response = await _httpClient.GetAsync($"{_endpoint}?filter={filtro}");
+            var response = await _httpClient.GetAsync(_endpoint);
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {

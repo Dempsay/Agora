@@ -16,6 +16,7 @@
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Inicio
             </NavLink>
         </div>
+
         @if (isAuthenticated)
         {
             <div class="nav-item px-3">
@@ -26,7 +27,8 @@
         }
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="login">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> @BtnLoginText
+                <span class="bi bi-login" aria-hidden="true"></span>
+                @textBtnLogin
             </NavLink>
         </div>
     </nav>
@@ -37,7 +39,7 @@
 
     private bool isAuthenticated = false;
 
-    private string BtnLoginText => isAuthenticated ? "Cerrar sesión" : "Iniciar sesión";
+    private string textBtnLogin => isAuthenticated ? "Cerrar sesión" : "Iniciar sesión";
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
