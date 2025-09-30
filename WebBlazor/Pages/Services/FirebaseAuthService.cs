@@ -1,7 +1,6 @@
 ﻿using Microsoft.JSInterop;
 using Service.Models.Login;
 
-
 namespace WebBlazor.Pages.Services
 {
     public class FirebaseAuthService

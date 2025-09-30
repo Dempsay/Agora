@@ -66,17 +66,15 @@ else
     bool isAuthenticated = false;
     string email = string.Empty;
     string password = string.Empty;
-
+    protected override async Task OnInitializedAsync()
+    {
+        isAuthenticated = await _firebaseAuthService.IsUserAuthenticated();
+    }
     private async Task Loguear()
     {
         var user = await _firebaseAuthService.SignInWithEmailPassword(email, password);
         if (user != null)
         {
-            if (user.EmailVerified == false)
-            {
-                await _sweetAlert.FireAsync("Verificación de correo", "Por favor, verifica tu correo electrónico antes de iniciar sesión.", SweetAlertIcon.Warning);
-                return;
-            }
             isAuthenticated = true;
             StateHasChanged();
         }

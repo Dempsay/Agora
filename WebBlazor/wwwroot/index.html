@@ -22,10 +22,11 @@
     </div>
 
     <div id="blazor-error-ui">
-        Te bailó tacticamente un ERROR.
+        Un error ha ocurrido.
         <a href="" class="reload">Recargar</a>
         <a class="dismiss">🗙</a>
     </div>
+
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <!-- Firebase Authentication -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -33,12 +34,12 @@
     <!-- Configuración de Firebase -->
     <script>
         const firebaseConfig = {
-            apiKey: "AIzaSyCm1lJB07-Y6AHvyWj0O1QtIJujznfXUW4",
-            authDomain: "agora-f2ed2.firebaseapp.com",
-            projectId: "agora-f2ed2",
-            storageBucket: "agora-f2ed2.firebasestorage.app",
-            messagingSenderId: "929954389192",
-            appId: "1:929954389192:web:98b993d006c1037f4419fd"
+            apiKey: "AIzaSyDmwMUxynp0NqfQ7pQ91sRt0AjkjMGqcHw",
+            authDomain: "agora-68d31.firebaseapp.com",
+            projectId: "agora-68d31",
+            storageBucket: "agora-68d31.firebasestorage.app",
+            messagingSenderId: "772654586754",
+            appId: "1:772654586754:web:343da1c46e2728dd35cd9b"
         };
         firebase.initializeApp(firebaseConfig);
         console.log(firebase);
@@ -55,7 +56,7 @@
             },
             createUserWithEmailAndPassword: async function (email, password, displayName) {
                 try {
-                    console.log(`email${email}") password: ${password} displayName: ${displayName}`);
+                    //imprimo por consola los parametros recibidos
                     const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
                     // El usuario se ha creado correctamente
                     const user = userCredential.user;
@@ -64,15 +65,14 @@
                     user.updateProfile({
                         displayName: displayName
                     });
-                    
-                    // Enviar correo de verificación
+
+                    //Enviar correo de verificación
                     user.sendEmailVerification();
-                        
+
                     return userCredential.user.uid;
 
 
-                }
-                catch (error) {
+                } catch (error) {
                     console.error("Error en autenticación:", error.message);
                     return null;
                 }
