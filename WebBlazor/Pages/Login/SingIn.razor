@@ -1,5 +1,4 @@
-﻿@page "/singin"
-@using WebBlazor.Pages.Services
+﻿@page "/signin"
 @inject SweetAlertService sweetAlert
 @inject FirebaseAuthService firebaseAuthService
 @inject NavigationManager navigationManager
@@ -46,7 +45,7 @@
         </form>
     </div>
     <div class="card-footer text-body-secondary">
-        Club Social Cosmopolita
+        Ágora
     </div>
 </div>
 
@@ -69,7 +68,7 @@
             return;
         }
         var result = await firebaseAuthService.createUserWithEmailAndPassword(email, password, name);
-        if (result != null)
+        if (result!= null)
         {
             await sweetAlert.FireAsync("Éxito", "Usuario registrado correctamente.", SweetAlertIcon.Success);
             // Limpiar los campos después del registro exitoso

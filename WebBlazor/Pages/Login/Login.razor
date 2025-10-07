@@ -1,7 +1,5 @@
 ﻿@page "/login"
-@using WebBlazor.Pages.Services
 @inject FirebaseAuthService _firebaseAuthService
-@inject IJSRuntime JS
 @inject SweetAlertService _sweetAlert
 @inject NavigationManager _navigationManager
 
@@ -17,24 +15,32 @@
             <div class="container">
                 <div class="row mb-3">
                     <div class="col-md-12 d-flex justify-content-center align-items-center">
-                        <label class="form-label me-2">Correo electrónico</label>
+                        <label class="form-label me-2">Correo electrónico:</label>
                         <InputText class="form-control w-50" @bind-Value="email" placeholder="usuario@gmail.com" />
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-12 d-flex justify-content-center align-items-center">
-                        <label class="form-label me-2">Password</label>
-                        <InputText class="form-control w-50" @bind-Value="password" placeholder="Password" type="password" />
+                        <label class="form-label me-2">Contraseña:</label>
+                        <InputText class="form-control w-50" @bind-Value="password" placeholder="Contraseña" type="password" />
                     </div>
                 </div>
-
+                <div class="row mb-3">
+                    <div class="col-md-12 d-flex justify-content-center align-items-center">
+                        <label class="form-check-label me-2">Recordar contraseña:</label>
+                        <InputCheckbox class="form-check w-50" @bind-Value="rememberPassword" />
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12 d-flex justify-content-center">
                         <button class="btn btn-primary mb-3" @onclick="Loguear">Acceder</button>
                     </div>
                     <div class="col-md-12 d-flex justify-content-center">
                         <button class="btn btn-secondary" @onclick="RegisterMe">Registrarme</button>
+                    </div>
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <button class="btn btn-secondary" @onclick="LoginWithGoogle">Google</button>
                     </div>
                 </div>
             </div>
@@ -66,10 +72,16 @@ else
     bool isAuthenticated = false;
     string email = string.Empty;
     string password = string.Empty;
+    bool rememberPassword = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        isAuthenticated = await _firebaseAuthService.IsUserAuthenticated();
+    }
 
     private async Task Loguear()
     {
-        var user = await _firebaseAuthService.SignInWithEmailPassword(email, password);
+        var user = await _firebaseAuthService.SignInWithEmailPassword(email, password, rememberPassword);
         if (user != null)
         {
             if (user.EmailVerified == false)
@@ -97,6 +109,21 @@ else
 
     private async Task RegisterMe()
     {
-        _navigationManager.NavigateTo("/singin");
+        _navigationManager.NavigateTo("/signin");
+    }
+    private async Task LoginWithGoogle()
+    {
+        var user = await _firebaseAuthService.LoginWithGoogle();
+        if (user != null)
+        {
+            isAuthenticated = true;
+            StateHasChanged();
+            // Aquí podrías redirigir al usuario a otra página si es necesario
+        }
+        else
+        {
+            // Manejar error de autenticación (mostrar mensaje, etc.)
+            await _sweetAlert.FireAsync("Error de autenticación", "No se pudo iniciar sesión con Google.", SweetAlertIcon.Error);
+        }
     }
 }
