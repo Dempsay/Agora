@@ -1,9 +1,14 @@
-namespace MovilApp.Views.Capacitaciones;
-
-public partial class CapacitacionesView : ContentPage
+namespace MovilApp.Views
 {
-	public CapacitacionesView()
-	{
-		InitializeComponent();
-	}
+    public partial class CapacitacionesView : ContentPage
+    {
+
+        public CapacitacionesView()
+        {
+            InitializeComponent();
+        }
+
+
+    }
+
 }
