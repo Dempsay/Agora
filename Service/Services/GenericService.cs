@@ -1,13 +1,7 @@
-﻿
-using Service.Interfaces;
+﻿using Service.Interfaces;
 using Service.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Service.Services
 {
@@ -15,7 +9,7 @@ namespace Service.Services
     {
         private readonly HttpClient _httpClient;
         protected readonly JsonSerializerOptions _options;
-        private readonly string _endpoint;
+        protected readonly string _endpoint;
 
 
         public GenericService()
@@ -26,6 +20,26 @@ namespace Service.Services
             //_endpoint = Properties.Resources.UrlApiLocal+ApiEndpoints.GetEndpoint(typeof(T).Name);
         }
 
+        public async Task<T?> AddAsync(T? entity)
+        {
+            var response = await _httpClient.PostAsJsonAsync(_endpoint, entity);
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al agregar el registro: {response.StatusCode} - {content}");
+            }
+            return JsonSerializer.Deserialize<T>(content, _options);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"{_endpoint}/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al eliminar el registro: {response.StatusCode}");
+            }
+            return response.IsSuccessStatusCode;
+        }
         public async Task<List<T>?> GetAllAsync(string? filtro="")
         {
             var response = await _httpClient.GetAsync($"{_endpoint}?filter={filtro}");
@@ -36,7 +50,16 @@ namespace Service.Services
             }
             return JsonSerializer.Deserialize<List<T>>(content, _options);
         }
-
+        public async Task<List<T>?> GetAllDeletedsAsync(string? filtro = "")
+        {
+            var response = await _httpClient.GetAsync($"{_endpoint}/deleteds");
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al obtener los datos: {response.StatusCode}");
+            }
+            return JsonSerializer.Deserialize<List<T>?>(content, _options);
+        }
         public async Task<T?> GetByIdAsync(int id)
         {
             var response = await _httpClient.GetAsync($"{_endpoint}/{id}");
@@ -44,17 +67,6 @@ namespace Service.Services
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Error al obtener los datos: {response.StatusCode}");
-            }
-            return JsonSerializer.Deserialize<T>(content, _options);
-        }
-
-        public async Task<T?> AddAsync(T? entity)
-        {
-            var response = await _httpClient.PostAsJsonAsync(_endpoint, entity);
-            var content = await response.Content.ReadAsStringAsync();
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Error al agregar el registro: {response.StatusCode} - {content}");
             }
             return JsonSerializer.Deserialize<T>(content, _options);
         }
@@ -73,16 +85,6 @@ namespace Service.Services
             }
         }
 
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var response = await _httpClient.DeleteAsync($"{_endpoint}/{id}");
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Error al eliminar el registro: {response.StatusCode}");
-            }
-            return response.IsSuccessStatusCode;
-        }
-
         public async Task<bool> RestoreAsync(int id)
         {
             var response = await _httpClient.PutAsync($"{_endpoint}/restore/{id}", null);
@@ -91,17 +93,6 @@ namespace Service.Services
                 throw new Exception($"Error al restaurar el dato: {response.StatusCode}");
             }
             return response.IsSuccessStatusCode;
-        }
-
-        public async Task<List<T>?> GetAllDeletedsAsync()
-        {
-            var response = await _httpClient.GetAsync($"{_endpoint}/deleteds");
-            var content = await response.Content.ReadAsStringAsync();
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception($"Error al obtener los datos: {response.StatusCode}");
-            }
-            return JsonSerializer.Deserialize<List<T>?>(content, _options);
         }
     }
 }

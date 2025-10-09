@@ -9,15 +9,13 @@ namespace Service.Models
     public class Inscripcion
     {
         public int Id { get; set; }
-        public string Apellido { get; set; }
-        public string Nombre { get; set; }
-        public string Dni { get; set; }
-        public string Email { get; set; } = string.Empty;
+        public int UsuarioId { get; set; }
+        public Usuario? Usuario { get; set; }
         public int TipoInscripcionId { get; set; }
         public TipoInscripcion? TipoInscripcion { get; set; }
         public int CapacitacionId { get; set; }
         public Capacitacion? Capacitacion { get; set; }
-        public bool Acreditado { get; set; } =false;
+        public bool Acreditado { get; set; } = false;
         public decimal Importe { get; set; } = 0;
         public bool Pagado { get; set; } = false;
         public int? UsuarioCobroId { get; set; }
@@ -26,7 +24,7 @@ namespace Service.Models
 
         public override string ToString()
         {
-            return $"{Apellido}, {Nombre} - {TipoInscripcion?.Nombre} - {Capacitacion?.Nombre}";
+            return $"{Usuario?.Apellido}, {Usuario?.Nombre} - {TipoInscripcion?.Nombre}";
         }
     }
 }
