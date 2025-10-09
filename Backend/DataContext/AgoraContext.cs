@@ -62,7 +62,7 @@ namespace Backend.DataContext
                     Id = 2,
                     Nombre = "Capacitación en ASP.NET Core",
                     Detalle = "Desarrollo web con ASP.NET Core",
-                    Ponente = "María López",
+                    Ponente = "Maríanela López",
                     FechaHora = new DateTime(2023, 10, 20, 14, 0, 0),
                     Cupo = 25,
                     InscripcionAbierta = true,
