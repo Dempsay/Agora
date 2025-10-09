@@ -75,6 +75,12 @@
 	  <MauiXaml Update="ContentViews\FlyoutHeader.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Admin\AddEditCapacitacionesView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Admin\AdminCapacitacionesView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\AgoraShell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

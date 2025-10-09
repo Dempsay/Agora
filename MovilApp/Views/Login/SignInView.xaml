@@ -1,72 +1,60 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:login="clr-namespace:MovilApp.ViewModels.Login"
              x:Class="MovilApp.Views.Login.SignInView"
-             Title="CrearCuenta">
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.BindingContext>
         <login:SignInViewModel />
     </ContentPage.BindingContext>
     <ScrollView>
-        <VerticalStackLayout Margin="20">
-            <Label 
-             FontSize="Title"
-             Text="Creando nueva cuenta en ÁgoraApp"
-             VerticalOptions="Center" 
-             HorizontalOptions="Center" />
-            <Grid RowDefinitions="2*,2*,2*,2*,2*,2*,*" ColumnDefinitions="*,*">
+        <VerticalStackLayout VerticalOptions="Center" Padding="30">
+            <Grid ColumnSpacing="10" RowSpacing="10" RowDefinitions="2*,2*,2*,2*,2*,2*,*" ColumnDefinitions="auto,*">
                 <Label Grid.Row="0" Grid.Column="0" 
-                    HorizontalTextAlignment="End"
-                    VerticalTextAlignment="Center"
-                    Margin="5,10">Nombre:</Label>
+                       HorizontalOptions="End"
+                       VerticalOptions="Center">Nombre:</Label>
                 <Entry Grid.Row="0" Grid.Column="1" 
-                    Text="{Binding Name}"
-                    Margin="10,20,10,20"></Entry>
+                       Text="{Binding Name}"></Entry>
                 <Label Grid.Row="1" Grid.Column="0" 
-                    HorizontalTextAlignment="End"
-                    VerticalTextAlignment="Center"
-                    Margin="5,10">Apellido:</Label>
+                       HorizontalOptions="End"
+                       VerticalOptions="Center">Apellido:</Label>
                 <Entry Grid.Row="1" Grid.Column="1" 
-                    Text="{Binding Lastname}"
-                    Margin="10,20,10,20"></Entry>
+                       Text="{Binding Lastname}"></Entry>
                 <Label Grid.Row="2" Grid.Column="0" 
-                    HorizontalTextAlignment="End"
-                    VerticalTextAlignment="Center"
-                    Margin="5,10">DNI:</Label>
+                       HorizontalOptions="End"
+                       VerticalOptions="Center">DNI:</Label>
                 <Entry Grid.Row="2" Grid.Column="1" 
-                    Text="{Binding Dni}"
-                    Margin="10,20,10,20"></Entry>
+                       Text="{Binding Dni}"></Entry>
                 <Label Grid.Row="3" Grid.Column="0" 
-                    HorizontalTextAlignment="End"
-                    VerticalTextAlignment="Center"
-                    Margin="10,20">Email:</Label>
+                       HorizontalOptions="End"
+                       VerticalOptions="Center">Email:</Label>
                 <Entry Grid.Row="3" Grid.Column="1" 
-                    Text="{Binding Email}"
-                    Margin="10,20,10,20"></Entry>
-
+                       Text="{Binding Email}"></Entry>
                 <Label Grid.Row="4" Grid.Column="0" 
-                    HorizontalTextAlignment="End"
-                    VerticalTextAlignment="Center"
-                    Margin="10,20">Contraseña:</Label>
+                       HorizontalOptions="End"
+                       VerticalOptions="Center">Contraseña:</Label>
                 <Entry Grid.Row="4" Grid.Column="1" 
-                    Text="{Binding Password}"
-                    Margin="10,20,100,20" IsPassword="True"></Entry>
-
+                       Text="{Binding Password}" IsPassword="True"></Entry>
                 <Label Grid.Row="5" Grid.Column="0" 
-                    HorizontalTextAlignment="End"
-                    VerticalTextAlignment="Center"
-                    Margin="10,20">Verificar Contraseña:</Label>
+                       HorizontalOptions="End"
+                       VerticalOptions="Center">Verificar Contraseña:</Label>
                 <Entry Grid.Row="5" Grid.Column="1" 
-                    Text="{Binding VerifyPassword}"
-                    Margin="10,20,100,20" IsPassword="True"></Entry>
-
+                       Text="{Binding VerifyPassword}" IsPassword="True"></Entry>
                 <Button Text="Registrarse"
-                     Command="{Binding RegistrarseCommand}"
-                     Grid.Row="6" Grid.Column="0"
-                     Grid.ColumnSpan="2"
-                     Margin="100,10"
-                     ></Button>
+                        Grid.Row="6" Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Command="{Binding RegistrarseCommand}"/>
             </Grid>
+            <!-- Botón volver al inicio -->
+            <Button Text="←"
+                    Command="{Binding VolverCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontSize="24"
+                    HorizontalOptions="Start"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    Margin="0,20,0,0"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

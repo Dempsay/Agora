@@ -7,6 +7,7 @@
     xmlns:login="clr-namespace:MovilApp.Views.Login"
     xmlns:contentviews="clr-namespace:MovilApp.ContentViews"
     xmlns:views="clr-namespace:MovilApp.Views"
+    xmlns:admin="clr-namespace:MovilApp.Views.Admin"
     xmlns:viewmodels="clr-namespace:MovilApp.ViewModels"
     FlyoutBehavior="Disabled"
     Title="ÁgoraApp">
@@ -41,20 +42,20 @@
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
 
-        <!--<Tab Title="Carreras"
-         Route="carreras"
+        <Tab Title="Capacitaciones"
+         Route="capacitaciones"
          Icon="paw.png">
             <ShellContent
                 Title="Lista"
                 Icon="cat.png"
-                ContentTemplate="{DataTemplate commons:CarrerasView}"
+                ContentTemplate="{DataTemplate admin:AdminCapacitacionesView}"
                 Route="ListaCarreras" />
             <ShellContent
                 Title="Agregar carrera"
                 Icon="dog.png"
-                ContentTemplate="{DataTemplate commons:AddEditCarreraView}"
+                ContentTemplate="{DataTemplate admin:AddEditCapacitacionesView}"
                 Route="AgregarEditarCarrera" />
-        </Tab>-->
+        </Tab>
     </FlyoutItem>
     <FlyoutItem Title="📖 Buscar Capacitaciones" Icon="search.png" >
         <ShellContent

@@ -3,18 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MovilApp.Views.Login.LoginView"
              xmlns:viewModels="clr-namespace:MovilApp.ViewModels.Login"
-             Title="IniciarSesionView"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.BindingContext>
         <viewModels:LoginViewModel />
     </ContentPage.BindingContext>
     <ScrollView>
-        <VerticalStackLayout  VerticalOptions="Center" Padding="30">
-            <Label 
-                FontSize="36"
-                Text="Inicio de sesión a ÁgoraApp"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
+        <VerticalStackLayout  VerticalOptions="Start" Padding="30">
             <Grid ColumnSpacing="10" RowSpacing="10" RowDefinitions="2*,2*,2*,*,*" ColumnDefinitions="auto,*">
                 <Label Grid.Row="0" Grid.Column="0" 
                        HorizontalOptions="End"
