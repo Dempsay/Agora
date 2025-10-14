@@ -89,11 +89,11 @@ namespace Backend.DataContext
         new Inscripcion { Id = 5,  UsuarioId = 4, TipoInscripcionId = 1, CapacitacionId = 2, Acreditado = true,  Importe = 12000m, Pagado = false,  UsuarioCobroId = null,    IsDeleted = false },
 
         // Vigente (no acreditadas aún)
-        new Inscripcion { Id = 6,  UsuarioId = 1, TipoInscripcionId = 1, CapacitacionId = 3, Acreditado = false, Importe = 15000m, Pagado = false, UsuarioCobroId = null, IsDeleted = false },
-        new Inscripcion { Id = 7,  UsuarioId = 2, TipoInscripcionId = 3, CapacitacionId = 3, Acreditado = false, Importe = 0m,     Pagado = false, UsuarioCobroId = null, IsDeleted = false },
-        new Inscripcion { Id = 8,  UsuarioId = 3, TipoInscripcionId = 1, CapacitacionId = 3, Acreditado = false, Importe = 15000m, Pagado = false,  UsuarioCobroId = null,    IsDeleted = false },
-        new Inscripcion { Id = 9,  UsuarioId = 4, TipoInscripcionId = 1, CapacitacionId = 3, Acreditado = false, Importe = 15000m, Pagado = false, UsuarioCobroId = null, IsDeleted = false },
-        new Inscripcion { Id = 10, UsuarioId = 5, TipoInscripcionId = 2, CapacitacionId = 3, Acreditado = false, Importe = 10000m, Pagado = false,  UsuarioCobroId = null,    IsDeleted = false }
+        new Inscripcion { Id = 6,  UsuarioId = 1, TipoInscripcionId = 1, CapacitacionId = 2, Acreditado = false, Importe = 15000m, Pagado = false, UsuarioCobroId = null, IsDeleted = false },
+        new Inscripcion { Id = 7,  UsuarioId = 2, TipoInscripcionId = 3, CapacitacionId = 2, Acreditado = false, Importe = 0m,     Pagado = false, UsuarioCobroId = null, IsDeleted = false },
+        new Inscripcion { Id = 8,  UsuarioId = 3, TipoInscripcionId = 1, CapacitacionId = 2, Acreditado = false, Importe = 15000m, Pagado = false,  UsuarioCobroId = null,    IsDeleted = false },
+        new Inscripcion { Id = 9,  UsuarioId = 4, TipoInscripcionId = 1, CapacitacionId = 2, Acreditado = false, Importe = 15000m, Pagado = false, UsuarioCobroId = null, IsDeleted = false },
+        new Inscripcion { Id = 10, UsuarioId = 5, TipoInscripcionId = 2, CapacitacionId = 2, Acreditado = false, Importe = 10000m, Pagado = false,  UsuarioCobroId = null,    IsDeleted = false }
     };
             // cargamos los datos iniciales de inscripciones
             modelBuilder.Entity<Inscripcion>().HasData(inscripciones);
