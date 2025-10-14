@@ -58,7 +58,7 @@ namespace Service.Services
             {
                 throw new Exception($"Error al obtener los datos: {response.StatusCode}");
             }
-            return JsonSerializer.Deserialize<List<T>?>(content, _options);
+            return JsonSerializer.Deserialize<List<T>>(content, _options);
         }
         public async Task<T?> GetByIdAsync(int id)
         {
