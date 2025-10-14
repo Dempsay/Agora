@@ -4,12 +4,16 @@ using Firebase.Auth;
 using Firebase.Auth.Providers;
 using MovilApp.Views;
 using System.Net.Http.Headers;
+using Service.Enums;
+using Service.Models;
+using Service.Services;
 
 namespace MovilApp.ViewModels.Login
 {
     public partial class SignInViewModel : ObservableObject
     {
         private readonly FirebaseAuthClient _clientAuth;
+        GenericService<Usuario> _usuarioService = new();
         private readonly string FirebaseApiKey;
         private readonly string RequestUri;
 
@@ -18,7 +22,15 @@ namespace MovilApp.ViewModels.Login
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistrarseCommand))]
-        private string nombre;
+        private string name;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RegistrarseCommand))]
+        private string lastname;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RegistrarseCommand))]
+        private string dni;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RegistrarseCommand))]
@@ -36,7 +48,7 @@ namespace MovilApp.ViewModels.Login
         {
             FirebaseApiKey = Service.Properties.Resources.ApiKeyFireBase;
             RequestUri = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + FirebaseApiKey;
-            RegistrarseCommand = new RelayCommand(Registrarse, PermitirRegistrarse);
+            RegistrarseCommand = new AsyncRelayCommand(Registrarse, PermitirRegistrarse);
             VolverCommand = new AsyncRelayCommand(Volver);
             _clientAuth = new FirebaseAuthClient(new FirebaseAuthConfig()
             {
@@ -51,20 +63,23 @@ namespace MovilApp.ViewModels.Login
 
         private bool PermitirRegistrarse()
         {
-            return !string.IsNullOrEmpty(nombre) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(verifyPassword);
+            return !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(VerifyPassword) && !string.IsNullOrEmpty(Dni) && !string.IsNullOrEmpty(Lastname);
+            ;
+
         }
 
         private async Task Volver()
         {
             if (Application.Current?.MainPage is AgoraShell shell)
             {
-               await shell.GoToAsync($"//Login");
+                await shell.GoToAsync("//Login");
             }
+
         }
 
-        private async void Registrarse()
+        private async Task Registrarse()
         {
-            if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(verifyPassword))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(verifyPassword))
             {
                 await Application.Current.MainPage.DisplayAlert("Registrarse", "Por favor complete todos los campos", "Ok");
                 return;
@@ -73,9 +88,26 @@ namespace MovilApp.ViewModels.Login
             {
                 try
                 {
-                    var user = await _clientAuth.CreateUserWithEmailAndPasswordAsync(email, password, nombre);
+                    var fullname = name + " " + lastname;
+                    var user = await _clientAuth.CreateUserWithEmailAndPasswordAsync(email, password, fullname);
+                    // Guardar el usuario en la base de datos
+                    var nuevoUsuario = new Usuario
+                    {
+                        Apellido = lastname,
+                        Nombre = name,
+                        Dni = dni,
+                        Email = email,
+                        TipoUsuario = TipoUsuarioEnum.Asistente,
+                        IsDeleted = false,
+                        DeleteDate = DateTime.Parse("1900-01-01")
+                    };
+                    var usuarioCreado = await _usuarioService.AddAsync(nuevoUsuario);
                     await SendVerificationEmailAsync(user.User.GetIdTokenAsync().Result);
                     await Application.Current.MainPage.DisplayAlert("Registrarse", "Cuenta creada!", "Ok");
+                    if (Application.Current?.MainPage is AgoraShell shell)
+                    {
+                        await shell.GoToAsync("//Login");
+                    }
                 }
                 catch (FirebaseAuthException error) // Use alias here 
                 {

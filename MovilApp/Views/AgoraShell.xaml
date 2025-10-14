@@ -42,19 +42,19 @@
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
 
-        <Tab Title="Capacitaciones"
+        <Tab Title="Admin Capacitaciones"
          Route="capacitaciones"
          Icon="paw.png">
             <ShellContent
                 Title="Lista"
                 Icon="cat.png"
                 ContentTemplate="{DataTemplate admin:AdminCapacitacionesView}"
-                Route="ListaCarreras" />
+                Route="AdminCapacitaciones" />
             <ShellContent
                 Title="Agregar carrera"
                 Icon="dog.png"
                 ContentTemplate="{DataTemplate admin:AddEditCapacitacionesView}"
-                Route="AgregarEditarCarrera" />
+                Route="AddEditCapacitacion" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="📖 Buscar Capacitaciones" Icon="search.png" >

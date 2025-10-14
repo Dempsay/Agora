@@ -19,6 +19,8 @@ namespace MovilApp.ViewModels.Admin
         private ObservableCollection<Capacitacion> capacitaciones;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(EditCommand))]
+        [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
         private Capacitacion capacitacionCurrent;
 
         [ObservableProperty]
@@ -36,17 +38,21 @@ namespace MovilApp.ViewModels.Admin
         {
             _=LoadCapacitaciones();
             AddCommand = new AsyncRelayCommand(AddCapacitacion);
-            EditCommand = new AsyncRelayCommand(EditCapacitacion, CanEditOrDelete);
-            DeleteCommand = new AsyncRelayCommand(DeleteCapacitacion, CanEditOrDelete);
+            EditCommand = new AsyncRelayCommand(EditCapacitacion, CanEditCapacitacion);
+            DeleteCommand = new AsyncRelayCommand(DeleteCapacitacion, CanDeleteCapacitacion);
             RefreshCommand = new AsyncRelayCommand(LoadCapacitaciones);
         }
 
+        private bool CanDeleteCapacitacion()
+        {
+            return capacitacionCurrent != null;
+        }
         private async Task DeleteCapacitacion()
         {
             throw new NotImplementedException();
         }
 
-        private bool CanEditOrDelete()
+        private bool CanEditCapacitacion()
         {
             return capacitacionCurrent != null;
         }

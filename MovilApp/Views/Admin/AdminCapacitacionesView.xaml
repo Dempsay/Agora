@@ -4,7 +4,7 @@
              xmlns:viewModels="clr-namespace:MovilApp.ViewModels.Admin"
              x:Class="MovilApp.Views.Admin.AdminCapacitacionesView">
     <ContentPage.BindingContext>
-    <viewModels:AdminCapacitacionesViewModel />
+        <viewModels:AdminCapacitacionesViewModel />
     </ContentPage.BindingContext>
 
     <Grid RowDefinitions="Auto, *, Auto, Auto, Auto">
@@ -14,7 +14,7 @@
                VerticalOptions="Center"
                Margin="0,10,0,10"
                Grid.Row="0"/>
-            <Entry Placeholder="Buscar productos..."
+            <Entry Placeholder="Buscar capacitaciones..."
            Text="{Binding FilterText}"
            HorizontalOptions="Center"
            VerticalOptions="Center"
@@ -29,6 +29,7 @@
             SelectionMode="Single"
             IsPullToRefreshEnabled="True"
             RefreshCommand="{Binding RefreshCommand}"
+            Margin="20,15,20,0"
             IsRefreshing="{Binding IsRefreshing}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -40,21 +41,18 @@
         </ScrollView>
         <Button Text="Agregar"
             Command="{Binding AddCommand}"
-            HorizontalOptions="Center"
             VerticalOptions="Center"
-            Margin="0,10,0,10"
+            Margin="20,15,20,0"
             Grid.Row="2"/>
-        <Button Text="Editar producto"
+        <Button Text="Editar"
             Command="{Binding EditCommand}"
-            HorizontalOptions="Center"
             VerticalOptions="Center"
-            Margin="0,10,0,10"
+            Margin="20,15,20,0"
             Grid.Row="3"/>
         <Button Text="Eliminar"
             Command="{Binding DeleteCommand}"
-            HorizontalOptions="Center"
             VerticalOptions="Center"
-            Margin="0,10,0,10"
+            Margin="20,15,20,0"
             Grid.Row="4"/>
     </Grid>
 </ContentPage>
