@@ -180,13 +180,13 @@ namespace Desktop.Views
             //chequeamos que haya películas seleccionadas
             if (DataGrid.Rows.Count > 0 && DataGrid.SelectedRows.Count > 0)
             {
-                Capacitacion entitySelected = (Capacitacion)DataGrid.SelectedRows[0].DataBoundItem;
-                var respuesta = MessageBox.Show($"¿Está seguro de recuperar la capacitación {entitySelected.Nombre} seleccionada?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                TipoInscripcion entitySelected = (TipoInscripcion)DataGrid.SelectedRows[0].DataBoundItem;
+                var respuesta = MessageBox.Show($"¿Está seguro de recuperar el tipo de inscripcion {entitySelected.Nombre} seleccionada?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (respuesta == DialogResult.Yes)
                 {
                     if (await _tipoInscripcionService.RestoreAsync(entitySelected.Id))
                     {
-                        LabelStatusMessage.Text = $"Capacitación {entitySelected.Nombre} restaurada correctamente";
+                        LabelStatusMessage.Text = $"Tipo de inscripcion {entitySelected.Nombre} restaurada correctamente";
                         TimerStatusBar.Start();
                         await GetAllData();
                     }
