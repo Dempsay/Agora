@@ -43,15 +43,6 @@
             BtnAgregar = new FontAwesome.Sharp.IconButton();
             BtnModificar = new FontAwesome.Sharp.IconButton();
             TabPageAgregarEditar = new TabPage();
-            checkInscripcionAbierta = new CheckBox();
-            label7 = new Label();
-            DateTimeFechaHora = new DateTimePicker();
-            TxtPonente = new TextBox();
-            label6 = new Label();
-            label5 = new Label();
-            NumericCupo = new NumericUpDown();
-            TxtDetalle = new TextBox();
-            label4 = new Label();
             TxtNombre = new TextBox();
             label3 = new Label();
             BtnCancelar = new FontAwesome.Sharp.IconButton();
@@ -66,7 +57,6 @@
             ((System.ComponentModel.ISupportInitialize)FilmPicture).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DataGrid).BeginInit();
             TabPageAgregarEditar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)NumericCupo).BeginInit();
             panel1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -262,15 +252,6 @@
             // 
             // TabPageAgregarEditar
             // 
-            TabPageAgregarEditar.Controls.Add(checkInscripcionAbierta);
-            TabPageAgregarEditar.Controls.Add(label7);
-            TabPageAgregarEditar.Controls.Add(DateTimeFechaHora);
-            TabPageAgregarEditar.Controls.Add(TxtPonente);
-            TabPageAgregarEditar.Controls.Add(label6);
-            TabPageAgregarEditar.Controls.Add(label5);
-            TabPageAgregarEditar.Controls.Add(NumericCupo);
-            TabPageAgregarEditar.Controls.Add(TxtDetalle);
-            TabPageAgregarEditar.Controls.Add(label4);
             TabPageAgregarEditar.Controls.Add(TxtNombre);
             TabPageAgregarEditar.Controls.Add(label3);
             TabPageAgregarEditar.Controls.Add(BtnCancelar);
@@ -283,93 +264,6 @@
             TabPageAgregarEditar.TabIndex = 0;
             TabPageAgregarEditar.Text = "Agregar/Editar";
             TabPageAgregarEditar.UseVisualStyleBackColor = true;
-            // 
-            // checkInscripcionAbierta
-            // 
-            checkInscripcionAbierta.AutoSize = true;
-            checkInscripcionAbierta.Location = new Point(175, 284);
-            checkInscripcionAbierta.Name = "checkInscripcionAbierta";
-            checkInscripcionAbierta.Size = new Size(155, 24);
-            checkInscripcionAbierta.TabIndex = 5;
-            checkInscripcionAbierta.Text = "Inscripcion Abierta";
-            checkInscripcionAbierta.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(67, 196);
-            label7.Margin = new Padding(2, 0, 2, 0);
-            label7.Name = "label7";
-            label7.Size = new Size(98, 20);
-            label7.TabIndex = 23;
-            label7.Text = "Fecha y Hora:";
-            // 
-            // DateTimeFechaHora
-            // 
-            DateTimeFechaHora.CustomFormat = "dd/MM/yyyy  HH:mm";
-            DateTimeFechaHora.Format = DateTimePickerFormat.Custom;
-            DateTimeFechaHora.Location = new Point(175, 190);
-            DateTimeFechaHora.Name = "DateTimeFechaHora";
-            DateTimeFechaHora.ShowUpDown = true;
-            DateTimeFechaHora.Size = new Size(242, 27);
-            DateTimeFechaHora.TabIndex = 3;
-            // 
-            // TxtPonente
-            // 
-            TxtPonente.ForeColor = Color.Black;
-            TxtPonente.Location = new Point(175, 143);
-            TxtPonente.Margin = new Padding(2);
-            TxtPonente.Name = "TxtPonente";
-            TxtPonente.Size = new Size(718, 27);
-            TxtPonente.TabIndex = 2;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(106, 148);
-            label6.Margin = new Padding(2, 0, 2, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(59, 20);
-            label6.TabIndex = 20;
-            label6.Text = "Orador:";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(118, 244);
-            label5.Margin = new Padding(2, 0, 2, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(47, 20);
-            label5.TabIndex = 19;
-            label5.Text = "Cupo:";
-            // 
-            // NumericCupo
-            // 
-            NumericCupo.Location = new Point(175, 237);
-            NumericCupo.Margin = new Padding(2);
-            NumericCupo.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-            NumericCupo.Name = "NumericCupo";
-            NumericCupo.Size = new Size(144, 27);
-            NumericCupo.TabIndex = 4;
-            NumericCupo.TextAlign = HorizontalAlignment.Right;
-            // 
-            // TxtDetalle
-            // 
-            TxtDetalle.Location = new Point(175, 96);
-            TxtDetalle.Margin = new Padding(2);
-            TxtDetalle.Name = "TxtDetalle";
-            TxtDetalle.Size = new Size(718, 27);
-            TxtDetalle.TabIndex = 1;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(105, 100);
-            label4.Margin = new Padding(2, 0, 2, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(60, 20);
-            label4.TabIndex = 16;
-            label4.Text = "Detalle:";
             // 
             // TxtNombre
             // 
@@ -440,9 +334,9 @@
             label1.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(13, 9);
             label1.Name = "label1";
-            label1.Size = new Size(265, 39);
+            label1.Size = new Size(379, 39);
             label1.TabIndex = 1;
-            label1.Text = "Capacitaciones";
+            label1.Text = "Tipos de Inscripciones";
             // 
             // statusStrip1
             // 
@@ -465,7 +359,7 @@
             TimerStatusBar.Interval = 5000;
             TimerStatusBar.Tick += TimerStatusBar_Tick;
             // 
-            // CapacitacionesView
+            // TipoInscripcionView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -474,7 +368,7 @@
             Controls.Add(panel1);
             Controls.Add(TabControl);
             Margin = new Padding(2);
-            Name = "CapacitacionesView";
+            Name = "TipoInscripcionView";
             StartPosition = FormStartPosition.CenterScreen;
             WindowState = FormWindowState.Maximized;
             TabControl.ResumeLayout(false);
@@ -484,7 +378,6 @@
             ((System.ComponentModel.ISupportInitialize)DataGrid).EndInit();
             TabPageAgregarEditar.ResumeLayout(false);
             TabPageAgregarEditar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)NumericCupo).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             statusStrip1.ResumeLayout(false);
@@ -510,21 +403,12 @@
         private TextBox TxtBuscar;
         private FontAwesome.Sharp.IconButton BtnCancelar;
         private FontAwesome.Sharp.IconButton BtnGuardar;
-        private TextBox TxtDetalle;
-        private Label label4;
         private TextBox TxtNombre;
         private Label label3;
-        private Label label5;
-        private NumericUpDown NumericCupo;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel LabelStatusMessage;
         private System.Windows.Forms.Timer TimerStatusBar;
         private CheckBox CheckVerEliminados;
         private FontAwesome.Sharp.IconButton BtnRestaurar;
-        private TextBox TxtPonente;
-        private Label label6;
-        private Label label7;
-        private DateTimePicker DateTimeFechaHora;
-        private CheckBox checkInscripcionAbierta;
     }
 }
