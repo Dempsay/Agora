@@ -31,7 +31,7 @@ namespace Desktop.Views
 
         }
 
-        private async Task ComboCapacitaciones_SelectedIndexChanged(object sender, EventArgs e)
+        private async void ComboCapacitaciones_SelectedIndexChanged(object sender, EventArgs e)
         {
             //controlamos que no sea null y haya una capacitación seleccionada
             if (ComboCapacitaciones.SelectedItem is Capacitacion selectedCapacitacion)
