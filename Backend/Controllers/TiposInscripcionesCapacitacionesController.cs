@@ -99,7 +99,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            tipoInscripcionCapacitacion.IsDeleted = false;
+            tipoInscripcionCapacitacion.IsDeleted = true;
             _context.TiposInscripcionesCapacitacion.Update(tipoInscripcionCapacitacion);
             await _context.SaveChangesAsync();
 
