@@ -114,6 +114,7 @@
             TxtEmail.Name = "TxtEmail";
             TxtEmail.Size = new Size(196, 27);
             TxtEmail.TabIndex = 8;
+            TxtEmail.KeyPress += TxtEmail_KeyPress;
             // 
             // TxtContraseña
             // 
@@ -122,6 +123,7 @@
             TxtContraseña.Size = new Size(196, 27);
             TxtContraseña.TabIndex = 9;
             TxtContraseña.TextChanged += TxtContraseña_TextChanged;
+            TxtContraseña.KeyPress += TxtContraseña_KeyPress;
             // 
             // LoginView
             // 

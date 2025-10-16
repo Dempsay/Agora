@@ -73,6 +73,7 @@
             // 
             // TabControl
             // 
+            TabControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             TabControl.Controls.Add(TabPageLista);
             TabControl.Controls.Add(TabPageAgregarEditar);
             TabControl.Location = new Point(17, 66);
@@ -106,6 +107,7 @@
             // 
             // BtnRestaurar
             // 
+            BtnRestaurar.Anchor = AnchorStyles.Right;
             BtnRestaurar.IconChar = FontAwesome.Sharp.IconChar.None;
             BtnRestaurar.IconColor = Color.Black;
             BtnRestaurar.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -130,7 +132,7 @@
             // 
             // BtnBuscar
             // 
-            BtnBuscar.Anchor = AnchorStyles.Bottom;
+            BtnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnBuscar.IconChar = FontAwesome.Sharp.IconChar.Search;
             BtnBuscar.IconColor = Color.Black;
             BtnBuscar.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -166,6 +168,7 @@
             // 
             // FilmPicture
             // 
+            FilmPicture.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             FilmPicture.Location = new Point(617, 50);
             FilmPicture.Margin = new Padding(2);
             FilmPicture.Name = "FilmPicture";
@@ -211,7 +214,7 @@
             // 
             // BtnEliminar
             // 
-            BtnEliminar.Anchor = AnchorStyles.Bottom;
+            BtnEliminar.Anchor = AnchorStyles.Right;
             BtnEliminar.IconChar = FontAwesome.Sharp.IconChar.Trash;
             BtnEliminar.IconColor = Color.Black;
             BtnEliminar.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -228,7 +231,7 @@
             // 
             // BtnAgregar
             // 
-            BtnAgregar.Anchor = AnchorStyles.Bottom;
+            BtnAgregar.Anchor = AnchorStyles.Right;
             BtnAgregar.IconChar = FontAwesome.Sharp.IconChar.FileCirclePlus;
             BtnAgregar.IconColor = Color.Black;
             BtnAgregar.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -245,7 +248,7 @@
             // 
             // BtnModificar
             // 
-            BtnModificar.Anchor = AnchorStyles.Bottom;
+            BtnModificar.Anchor = AnchorStyles.Right;
             BtnModificar.IconChar = FontAwesome.Sharp.IconChar.Pencil;
             BtnModificar.IconColor = Color.Black;
             BtnModificar.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -431,7 +434,7 @@
             panel1.Location = new Point(-2, -2);
             panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1007, 63);
+            panel1.Size = new Size(991, 63);
             panel1.TabIndex = 7;
             // 
             // label1
@@ -448,10 +451,10 @@
             // 
             statusStrip1.ImageScalingSize = new Size(24, 24);
             statusStrip1.Items.AddRange(new ToolStripItem[] { LabelStatusMessage });
-            statusStrip1.Location = new Point(0, 478);
+            statusStrip1.Location = new Point(0, 449);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new Padding(1, 0, 11, 0);
-            statusStrip1.Size = new Size(1003, 22);
+            statusStrip1.Size = new Size(990, 22);
             statusStrip1.TabIndex = 8;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -469,7 +472,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1003, 500);
+            ClientSize = new Size(990, 471);
             Controls.Add(statusStrip1);
             Controls.Add(panel1);
             Controls.Add(TabControl);

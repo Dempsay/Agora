@@ -19,7 +19,7 @@ namespace Desktop.Views
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            ProgressBar.Value += 2;
+            ProgressBar.Value += 5;
             if (ProgressBar.Value == 100)
             {
                 Timer.Stop();

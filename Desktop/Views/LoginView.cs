@@ -63,7 +63,7 @@ namespace Desktop.Views
 
         private void TxtContraseña_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void BtnCancelar_Click(object sender, EventArgs e)
@@ -74,6 +74,25 @@ namespace Desktop.Views
         private void CheckVerContraseña_CheckedChanged(object sender, EventArgs e)
         {
             TxtContraseña.PasswordChar = CheckVerContraseña.Checked ? '\0' : '*';
+        }
+
+        private void TxtContraseña_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                BtnIniciarSesion.PerformClick();
+                e.Handled = true;
+            }
+        }
+
+        private void TxtEmail_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //hacemos que al pulsar enter en el txtEmail se pase al txtContraseña
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                TxtContraseña.Focus();
+                e.Handled = true;
+            }
         }
     }
 }
