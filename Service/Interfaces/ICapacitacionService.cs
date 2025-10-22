@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Service.Interfaces
 {
-    internal interface ICapacitacionnService : IGenericService<Capacitacion>    
+    public interface ICapacitacionService : IGenericService<Capacitacion>
     {
         public Task<List<Capacitacion>?> GetCapacitacionesAbiertasAsync();
+        public Task<List<Capacitacion>?> GetCapacitacionesFuturasAsync();
+
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service.Interfaces
 {
-    internal interface IInscipcionService : IGenericService<Inscripcion>    
+    public interface IInscripcionService : IGenericService<Inscripcion>    
     {
         public Task<List<Inscripcion>?> GetInscriptosAsync(int id);
     }

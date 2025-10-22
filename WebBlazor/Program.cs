@@ -14,5 +14,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 builder.Services.AddSingleton<FirebaseAuthService>();
 builder.Services.AddSweetAlert2();
+builder.Services.AddScoped<IInscripcionService, InscripcionService>();
+builder.Services.AddScoped<ICapacitacionService, CapacitacionService>();
 
 await builder.Build().RunAsync();

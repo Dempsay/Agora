@@ -10,19 +10,30 @@ using System.Threading.Tasks;
 
 namespace Service.Services
 {
-    public class CapacitacionService : GenericService<Inscripcion>, IInscipcionService
+    public class CapacitacionService : GenericService<Capacitacion>, ICapacitacionService
     {
 
-        public async Task<List<Inscripcion>?> GetInscriptosAsync(int id)
+        public async Task<List<Capacitacion>?> GetCapacitacionesAbiertasAsync()
         {
-            var response = await _httpClient.GetAsync($"{_endpoint}/inscriptos/{id}");
+            var response = await _httpClient.GetAsync($"{_endpoint}/abiertas");
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Error al obtener los datos: {response.StatusCode}");
             }
-            return JsonSerializer.Deserialize<List<Inscripcion>>(content, _options);
+            return JsonSerializer.Deserialize<List<Capacitacion>>(content, _options);
         }
+
+        public async Task<List<Capacitacion>?> GetCapacitacionesFuturasAsync()
+        {
+            var response = await _httpClient.GetAsync($"{_endpoint}/futuras");
+            var content = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al obtener los datos: {response.StatusCode}");
+            }
+            return JsonSerializer.Deserialize<List<Capacitacion>>(content, _options);
+        }
+
     }
 }
-

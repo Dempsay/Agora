@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Service.Services
 {
-    public class InscripcionService : GenericService<Inscripcion>, IInscipcionService
+    public class InscripcionService : GenericService<Inscripcion>, IInscripcionService
     {
 
         public async Task<List<Inscripcion>?> GetInscriptosAsync(int id)
