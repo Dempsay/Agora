@@ -6,10 +6,7 @@
 
 @if (!isAuthenticated)
 {
-    <div class="card text-center">
-        <div class="card-header">
-            Iniciar sesión
-        </div>
+    <PageHeader Title="Iniciar sesión"/>
         <div class="card-body">
             <h3 class="card-title">Bienvenido a Ágora</h3>
             <div class="container">
@@ -48,16 +45,14 @@
         <div class="card-footer text-body-secondary">
             Desarrollo 2do año - TSDS - 2025
         </div>
-    </div>
 }
 else
 {
     <div class="card text-center">
         <div class="card-header">
-            Cerrar sesión
+            Cerrar sesión de Ágora
         </div>
         <div class="card-body">
-            <p class="card-header">Cerrar sesión de Ágora</p>
 
             <button class="btn btn-primary" @onclick="Desloguear">Cerrar sesión</button>
         </div>

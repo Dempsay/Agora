@@ -1,8 +1,11 @@
 ﻿<div class="header-card">
     <h1 class="header-title">@Title</h1>
-    <p class="header-description">
-        @Description
-    </p>
+    @if (Description != null)
+    {
+        <p class="header-description">
+            @Description
+        </p>
+    }
 </div>
 
 @code {
