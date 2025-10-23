@@ -13,11 +13,11 @@
 
 @if (capacitacionesAbiertas is null)
 {
-    <p><em>Cargando capacitaciones abiertas...</em></p>
+    <p><em>Cargando capacitaciones abiertas y futuras...</em></p>
 }
 else if (!capacitacionesAbiertas.Any())
 {
-    <p>No hay capacitaciones abiertas en este momento. Por favor, vuelva más tarde.</p>
+    <p>No hay capacitaciones abiertas en este momento.</p>
 }
 else
 {
@@ -31,13 +31,40 @@ else
         }
     </div>
 }
+@if(capacitacionesFuturas is null)
+{
+    <p><em>Cargando capacitaciones futuras...</em></p>
+}
+else if (!capacitacionesFuturas.Any())
+{
+    <p>No hay capacitaciones próximas programadas en este momento.</p>
+}
+else
+{
+<h3>Capacitaciones Próximas</h3>
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    @foreach (var capacitacion in capacitacionesFuturas)
+    {
+        <div class="col">
+            <CardCapacitacion Capacitacion="capacitacion" />
+        </div>
+    }
+</div>
+}
+
 
 
 @code {
     private List<Capacitacion>? capacitacionesAbiertas;
+    private List<Capacitacion>? capacitacionesFuturas;
 
     protected override async Task OnInitializedAsync()
     {
-        capacitacionesAbiertas = await _capacitacionService.GetCapacitacionesAbiertasAsync();
+        //cargamos capacitaciones futuras abiertas y futuras en forma simultanea con Task.WhenAll
+        var capacitacionesAbiertasTask = _capacitacionService.GetCapacitacionesAbiertasAsync();
+        var capacitacionesFuturasTask = _capacitacionService.GetCapacitacionesFuturasAsync();
+        await Task.WhenAll(capacitacionesAbiertasTask, capacitacionesFuturasTask);  
+        capacitacionesAbiertas = await capacitacionesAbiertasTask;
+        capacitacionesFuturas = await capacitacionesFuturasTask;
     }
 }

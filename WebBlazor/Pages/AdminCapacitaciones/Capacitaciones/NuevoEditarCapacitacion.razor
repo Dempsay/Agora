@@ -11,8 +11,8 @@ else
     <h3 >@tituloPagina</h3>
     <div style="background-color: @(isEditing ? "lightyellow": "white")">
         <EditForm Model="capacitacion" OnValidSubmit="Guardar">
-        <DataAnnotationsValidator />
-        <div class="container">
+            <DataAnnotationsValidator />
+            <div class="container">
                 <div class="col-md-5">
                     <div class="form-group">
                         <label class="form-label">Nombre:</label>
@@ -27,8 +27,12 @@ else
                         <InputText class="form-control mb-2" type="text" @bind-Value="capacitacion.Ponente" />
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Fecha y hora:</label>
+                        <label class="form-label">Fecha:</label>
                         <InputDate class="form-control mb-2" @bind-Value="capacitacion.FechaHora" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Hora:</label>
+                        <InputText class="form-control mb-2" type="time" @bind-Value="hora" />
                     </div>
                     <div class="form-group">
                         <label class="form-label">Cupo:</label>
@@ -44,8 +48,8 @@ else
                 <ValidationSummary />
                 <button class="btn btn-primary" type="submit">@guardarButtonText</button>
                 <button class="btn btn-danger" @onclick="Cancelar">Cancelar</button>
-        </div>
-    </EditForm>
+            </div>
+        </EditForm>
     </div>
 }
 @code {
@@ -53,6 +57,7 @@ else
     [Parameter]
     public int? idCapacitacion { get; set; }
     private Capacitacion capacitacion;
+    private string hora;
 
     private bool isEditing => idCapacitacion != null;
     private string guardarButtonText => isEditing ? "Actualizar" : "Agregar";
@@ -73,6 +78,11 @@ else
     private async Task Guardar()
     {
         //logger.LogInformation(campania.PropertiesToString());
+        // combinamos la fecha y hora en un solo DateTime
+        if (TimeSpan.TryParse(hora, out var horaTimeSpan))
+        {
+            capacitacion.FechaHora = capacitacion.FechaHora.Date.Add(horaTimeSpan);
+        }
         if (idCapacitacion != null)
             await _capacitacionService.UpdateAsync(capacitacion);
         else
