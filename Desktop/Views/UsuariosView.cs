@@ -43,6 +43,8 @@ namespace Desktop.Views
             DataGrid.DataSource = _usuarios;
             DataGrid.Columns["Id"].Visible = false;
             DataGrid.Columns["IsDeleted"].Visible = false;
+            DataGrid.Columns["DeleteDate"].Visible = false;
+
             await GetComboTiposDeUsuarios();
         }
         private async Task GetComboTiposDeUsuarios()
@@ -117,22 +119,22 @@ namespace Desktop.Views
         {
             Usuario usuarioAGuardar = new Usuario
             {
-                Id = _currentUsuario?.Id?? 0, 
+                Id = _currentUsuario?.Id ?? 0,
                 Nombre = TxtNombre.Text,
                 Apellido = TxtApellido.Text,
                 Dni = TxtDni.Text,
                 Email = TxtEmail.Text,
-                TipoUsuario = (TipoUsuarioEnum)(ComboTiposDeUsuarios.SelectedItem?? TipoUsuarioEnum.Asistente)
+                TipoUsuario = (TipoUsuarioEnum)(ComboTiposDeUsuarios.SelectedItem ?? TipoUsuarioEnum.Asistente)
 
             };
             bool response = false;
             if (_currentUsuario != null)
             {
-                 response = await _usuarioService.UpdateAsync(usuarioAGuardar);
+                response = await _usuarioService.UpdateAsync(usuarioAGuardar);
             }
             else
             {
-               var nuevousuario = await _usuarioService.AddAsync(usuarioAGuardar);
+                var nuevousuario = await _usuarioService.AddAsync(usuarioAGuardar);
                 response = nuevousuario != null;
             }
             if (response)
@@ -142,7 +144,7 @@ namespace Desktop.Views
                 TimerStatusBar.Start(); // Iniciar el temporizador para mostrar el mensaje en la barra de estado
                 await GetAllData();
                 LimpiarControlesAgregarEditar();
-                TabControl.SelectedTab=TabPageLista;
+                TabControl.SelectedTab = TabPageLista;
             }
             else
             {
@@ -153,7 +155,7 @@ namespace Desktop.Views
         private void BtnModificar_Click(object sender, EventArgs e)
         {
             //checheamos que haya capacitacion seleccionadas
-             if (DataGrid.RowCount > 0 && DataGrid.SelectedRows.Count > 0)
+            if (DataGrid.RowCount > 0 && DataGrid.SelectedRows.Count > 0)
             {
                 _currentUsuario = (Usuario)DataGrid.SelectedRows[0].DataBoundItem;
                 TxtNombre.Text = _currentUsuario.Nombre;
@@ -162,7 +164,7 @@ namespace Desktop.Views
                 TxtEmail.Text = _currentUsuario.Email;
                 ComboTiposDeUsuarios.SelectedItem = _currentUsuario.TipoUsuario;
                 TabControl.SelectedTab = TabPageAgregarEditar;
-                
+
             }
             else
             {
@@ -172,14 +174,14 @@ namespace Desktop.Views
 
         private async void BtnBuscar_Click(object sender, EventArgs e)
         {
-              DataGrid.DataSource = await _usuarioService.GetAllAsync(TxtBuscar.Text);
+            DataGrid.DataSource = await _usuarioService.GetAllAsync(TxtBuscar.Text);
         }
 
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
-            
-               // BtnBuscar.PerformClick();
-            
+
+            // BtnBuscar.PerformClick();
+
         }
 
         private void TimerStatusBar_Tick(object sender, EventArgs e)

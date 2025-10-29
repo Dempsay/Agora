@@ -43,6 +43,9 @@
             BtnAgregar = new FontAwesome.Sharp.IconButton();
             BtnModificar = new FontAwesome.Sharp.IconButton();
             TabPageAgregarEditar = new TabPage();
+            TxtEmail = new TextBox();
+            label7 = new Label();
+            label5 = new Label();
             ComboTiposDeUsuarios = new ComboBox();
             TxtDni = new TextBox();
             label6 = new Label();
@@ -57,9 +60,10 @@
             statusStrip1 = new StatusStrip();
             LabelStatusMessage = new ToolStripStatusLabel();
             TimerStatusBar = new System.Windows.Forms.Timer(components);
-            label5 = new Label();
-            TxtEmail = new TextBox();
-            label7 = new Label();
+            TxtPassword = new TextBox();
+            label8 = new Label();
+            TxtVerifyPassword = new TextBox();
+            label9 = new Label();
             TabControl.SuspendLayout();
             TabPageLista.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)FilmPicture).BeginInit();
@@ -263,6 +267,10 @@
             // 
             // TabPageAgregarEditar
             // 
+            TabPageAgregarEditar.Controls.Add(TxtVerifyPassword);
+            TabPageAgregarEditar.Controls.Add(label9);
+            TabPageAgregarEditar.Controls.Add(TxtPassword);
+            TabPageAgregarEditar.Controls.Add(label8);
             TabPageAgregarEditar.Controls.Add(TxtEmail);
             TabPageAgregarEditar.Controls.Add(label7);
             TabPageAgregarEditar.Controls.Add(label5);
@@ -284,10 +292,39 @@
             TabPageAgregarEditar.Text = "Agregar/Editar";
             TabPageAgregarEditar.UseVisualStyleBackColor = true;
             // 
+            // TxtEmail
+            // 
+            TxtEmail.ForeColor = Color.Black;
+            TxtEmail.Location = new Point(175, 188);
+            TxtEmail.Margin = new Padding(2);
+            TxtEmail.Name = "TxtEmail";
+            TxtEmail.Size = new Size(718, 27);
+            TxtEmail.TabIndex = 28;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(116, 195);
+            label7.Margin = new Padding(2, 0, 2, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(49, 20);
+            label7.TabIndex = 29;
+            label7.Text = "Email:";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(48, 330);
+            label5.Margin = new Padding(2, 0, 2, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(117, 20);
+            label5.TabIndex = 27;
+            label5.Text = "Tipo de Usuario:";
+            // 
             // ComboTiposDeUsuarios
             // 
             ComboTiposDeUsuarios.FormattingEnabled = true;
-            ComboTiposDeUsuarios.Location = new Point(175, 231);
+            ComboTiposDeUsuarios.Location = new Point(175, 322);
             ComboTiposDeUsuarios.Name = "ComboTiposDeUsuarios";
             ComboTiposDeUsuarios.Size = new Size(251, 28);
             ComboTiposDeUsuarios.TabIndex = 26;
@@ -423,34 +460,44 @@
             TimerStatusBar.Interval = 5000;
             TimerStatusBar.Tick += TimerStatusBar_Tick;
             // 
-            // label5
+            // TxtPassword
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(48, 239);
-            label5.Margin = new Padding(2, 0, 2, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(117, 20);
-            label5.TabIndex = 27;
-            label5.Text = "Tipo de Usuario:";
+            TxtPassword.ForeColor = Color.Black;
+            TxtPassword.Location = new Point(175, 236);
+            TxtPassword.Margin = new Padding(2);
+            TxtPassword.Name = "TxtPassword";
+            TxtPassword.PasswordChar = '*';
+            TxtPassword.Size = new Size(718, 27);
+            TxtPassword.TabIndex = 30;
             // 
-            // TxtEmail
+            // label8
             // 
-            TxtEmail.ForeColor = Color.Black;
-            TxtEmail.Location = new Point(175, 188);
-            TxtEmail.Margin = new Padding(2);
-            TxtEmail.Name = "TxtEmail";
-            TxtEmail.Size = new Size(718, 27);
-            TxtEmail.TabIndex = 28;
+            label8.AutoSize = true;
+            label8.Location = new Point(79, 236);
+            label8.Margin = new Padding(2, 0, 2, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(86, 20);
+            label8.TabIndex = 31;
+            label8.Text = "Contraseña:";
             // 
-            // label7
+            // TxtVerifyPassword
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(130, 193);
-            label7.Margin = new Padding(2, 0, 2, 0);
-            label7.Name = "label7";
-            label7.Size = new Size(49, 20);
-            label7.TabIndex = 29;
-            label7.Text = "Email:";
+            TxtVerifyPassword.ForeColor = Color.Black;
+            TxtVerifyPassword.Location = new Point(175, 276);
+            TxtVerifyPassword.Margin = new Padding(2);
+            TxtVerifyPassword.Name = "TxtVerifyPassword";
+            TxtVerifyPassword.Size = new Size(718, 27);
+            TxtVerifyPassword.TabIndex = 32;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(29, 279);
+            label9.Margin = new Padding(2, 0, 2, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(136, 20);
+            label9.TabIndex = 33;
+            label9.Text = "Repetir contraseña:";
             // 
             // UsuariosView
             // 
@@ -511,5 +558,9 @@
         private TextBox TxtEmail;
         private Label label7;
         private Label label5;
+        private TextBox TxtPassword;
+        private Label label8;
+        private TextBox TxtVerifyPassword;
+        private Label label9;
     }
 }
