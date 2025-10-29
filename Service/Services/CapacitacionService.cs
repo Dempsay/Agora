@@ -12,7 +12,6 @@ namespace Service.Services
 {
     public class CapacitacionService : GenericService<Capacitacion>, ICapacitacionService
     {
-
         public async Task<List<Capacitacion>?> GetCapacitacionesAbiertasAsync()
         {
             var response = await _httpClient.GetAsync($"{_endpoint}/abiertas");
@@ -23,7 +22,6 @@ namespace Service.Services
             }
             return JsonSerializer.Deserialize<List<Capacitacion>>(content, _options);
         }
-
         public async Task<List<Capacitacion>?> GetCapacitacionesFuturasAsync()
         {
             var response = await _httpClient.GetAsync($"{_endpoint}/futuras");
@@ -34,6 +32,5 @@ namespace Service.Services
             }
             return JsonSerializer.Deserialize<List<Capacitacion>>(content, _options);
         }
-
     }
 }

@@ -23,9 +23,13 @@ namespace Backend.Controllers
 
         // GET: api/Usuarios
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios([FromQuery] string? filter = "")
         {
-            return await _context.Usuarios.ToListAsync();
+            return await _context.Usuarios.Where
+            (u => u.Nombre.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || u.Apellido.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || u.Email.Contains(filter, StringComparison.OrdinalIgnoreCase)
+            || u.Dni.Contains(filter, StringComparison.OrdinalIgnoreCase)).AsNoTracking().ToListAsync();
         }
 
         [HttpGet("Deleteds")]

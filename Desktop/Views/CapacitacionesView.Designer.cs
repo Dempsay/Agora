@@ -61,6 +61,8 @@
             statusStrip1 = new StatusStrip();
             LabelStatusMessage = new ToolStripStatusLabel();
             TimerStatusBar = new System.Windows.Forms.Timer(components);
+            ComboTiposDeUsuarios = new ComboBox();
+            dataGridView1 = new DataGridView();
             TabControl.SuspendLayout();
             TabPageLista.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)FilmPicture).BeginInit();
@@ -69,6 +71,7 @@
             ((System.ComponentModel.ISupportInitialize)NumericCupo).BeginInit();
             panel1.SuspendLayout();
             statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // TabControl
@@ -80,7 +83,7 @@
             TabControl.Margin = new Padding(2);
             TabControl.Name = "TabControl";
             TabControl.SelectedIndex = 0;
-            TabControl.Size = new Size(966, 391);
+            TabControl.Size = new Size(1018, 531);
             TabControl.TabIndex = 6;
             // 
             // TabPageLista
@@ -265,6 +268,8 @@
             // 
             // TabPageAgregarEditar
             // 
+            TabPageAgregarEditar.Controls.Add(dataGridView1);
+            TabPageAgregarEditar.Controls.Add(ComboTiposDeUsuarios);
             TabPageAgregarEditar.Controls.Add(checkInscripcionAbierta);
             TabPageAgregarEditar.Controls.Add(label7);
             TabPageAgregarEditar.Controls.Add(DateTimeFechaHora);
@@ -282,7 +287,7 @@
             TabPageAgregarEditar.Margin = new Padding(2);
             TabPageAgregarEditar.Name = "TabPageAgregarEditar";
             TabPageAgregarEditar.Padding = new Padding(2);
-            TabPageAgregarEditar.Size = new Size(958, 358);
+            TabPageAgregarEditar.Size = new Size(1010, 498);
             TabPageAgregarEditar.TabIndex = 0;
             TabPageAgregarEditar.Text = "Agregar/Editar";
             TabPageAgregarEditar.UseVisualStyleBackColor = true;
@@ -399,7 +404,7 @@
             BtnCancelar.IconColor = Color.Black;
             BtnCancelar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             BtnCancelar.ImageAlign = ContentAlignment.MiddleLeft;
-            BtnCancelar.Location = new Point(499, 302);
+            BtnCancelar.Location = new Point(525, 442);
             BtnCancelar.Margin = new Padding(2);
             BtnCancelar.Name = "BtnCancelar";
             BtnCancelar.Size = new Size(109, 43);
@@ -416,7 +421,7 @@
             BtnGuardar.IconColor = Color.Black;
             BtnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             BtnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
-            BtnGuardar.Location = new Point(339, 302);
+            BtnGuardar.Location = new Point(365, 442);
             BtnGuardar.Margin = new Padding(2);
             BtnGuardar.Name = "BtnGuardar";
             BtnGuardar.Size = new Size(109, 43);
@@ -434,7 +439,7 @@
             panel1.Location = new Point(-2, -2);
             panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(991, 63);
+            panel1.Size = new Size(1043, 63);
             panel1.TabIndex = 7;
             // 
             // label1
@@ -451,10 +456,10 @@
             // 
             statusStrip1.ImageScalingSize = new Size(24, 24);
             statusStrip1.Items.AddRange(new ToolStripItem[] { LabelStatusMessage });
-            statusStrip1.Location = new Point(0, 449);
+            statusStrip1.Location = new Point(0, 589);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new Padding(1, 0, 11, 0);
-            statusStrip1.Size = new Size(990, 22);
+            statusStrip1.Size = new Size(1042, 22);
             statusStrip1.TabIndex = 8;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -468,11 +473,31 @@
             TimerStatusBar.Interval = 5000;
             TimerStatusBar.Tick += TimerStatusBar_Tick;
             // 
+            // ComboTiposDeUsuarios
+            // 
+            ComboTiposDeUsuarios.FormattingEnabled = true;
+            ComboTiposDeUsuarios.Location = new Point(448, 190);
+            ComboTiposDeUsuarios.Name = "ComboTiposDeUsuarios";
+            ComboTiposDeUsuarios.Size = new Size(251, 28);
+            ComboTiposDeUsuarios.TabIndex = 24;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(448, 224);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(251, 164);
+            dataGridView1.TabIndex = 25;
+            // 
             // CapacitacionesView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(990, 471);
+            ClientSize = new Size(1042, 611);
             Controls.Add(statusStrip1);
             Controls.Add(panel1);
             Controls.Add(TabControl);
@@ -492,6 +517,7 @@
             panel1.PerformLayout();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -529,5 +555,7 @@
         private Label label7;
         private DateTimePicker DateTimeFechaHora;
         private CheckBox checkInscripcionAbierta;
+        private ComboBox ComboTiposDeUsuarios;
+        private DataGridView dataGridView1;
     }
 }
