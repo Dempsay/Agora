@@ -87,6 +87,15 @@ namespace Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
+            //controlamos que el email no exista ya y que el dni exista ya
+            if (_context.Usuarios.IgnoreQueryFilters().Any(u => u.Email == usuario.Email))
+            {
+                return Conflict("El usuario ya registrado con el Email ingresado.");
+            }
+            if (_context.Usuarios.IgnoreQueryFilters().Any(u => u.Dni.Trim().Replace(".", "") == usuario.Dni.Trim()))
+            {
+                return Conflict("El usuario ya registrado con el DNI ingresado.");
+            }
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
