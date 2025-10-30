@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Threading.Tasks;
+using Desktop.ExtensionMetthd;
 using Service.Models;
 using Service.Services;
 
@@ -8,6 +9,7 @@ namespace Desktop.Views
     public partial class CapacitacionesView : Form
     {
         GenericService<Capacitacion> _capacitacionService = new GenericService<Capacitacion>();
+        GenericService<TipoInscripcion> _tipoInscripcionService = new();
         Capacitacion _currentCapacitacion;
         List<Capacitacion>? _capacitaciones;
 
@@ -42,6 +44,13 @@ namespace Desktop.Views
             DataGrid.DataSource = _capacitaciones;
             DataGrid.Columns["Id"].Visible = false;
             DataGrid.Columns["IsDeleted"].Visible = false;
+            await GetComboTiposDeInscripciones();
+        }
+        private async Task GetComboTiposDeInscripciones()
+        {
+            ComboTiposInscripciones.DataSource = await _tipoInscripcionService.GetAllAsync();
+            ComboTiposInscripciones.DisplayMember = "Nombre";
+            ComboTiposInscripciones.ValueMember = "Id";
         }
 
         private void GridPeliculas_SelectionChanged_1(object sender, EventArgs e)
@@ -111,7 +120,7 @@ namespace Desktop.Views
         {
             Capacitacion capacitacionAGuardar = new Capacitacion
             {
-                Id = _currentCapacitacion?.Id?? 0, 
+                Id = _currentCapacitacion?.Id ?? 0,
                 Nombre = TxtNombre.Text,
                 Detalle = TxtDetalle.Text,
                 Ponente = TxtPonente.Text,
@@ -123,11 +132,11 @@ namespace Desktop.Views
             bool response = false;
             if (_currentCapacitacion != null)
             {
-                 response = await _capacitacionService.UpdateAsync(capacitacionAGuardar);
+                response = await _capacitacionService.UpdateAsync(capacitacionAGuardar);
             }
             else
             {
-               var nuevacapacitacion = await _capacitacionService.AddAsync(capacitacionAGuardar);
+                var nuevacapacitacion = await _capacitacionService.AddAsync(capacitacionAGuardar);
                 response = nuevacapacitacion != null;
             }
             if (response)
@@ -137,7 +146,7 @@ namespace Desktop.Views
                 TimerStatusBar.Start(); // Iniciar el temporizador para mostrar el mensaje en la barra de estado
                 await GetAllData();
                 LimpiarControlesAgregarEditar();
-                TabControl.SelectedTab=TabPageLista;
+                TabControl.SelectedTab = TabPageLista;
             }
             else
             {
@@ -148,7 +157,7 @@ namespace Desktop.Views
         private void BtnModificar_Click(object sender, EventArgs e)
         {
             //checheamos que haya capacitacion seleccionadas
-             if (DataGrid.RowCount > 0 && DataGrid.SelectedRows.Count > 0)
+            if (DataGrid.RowCount > 0 && DataGrid.SelectedRows.Count > 0)
             {
                 _currentCapacitacion = (Capacitacion)DataGrid.SelectedRows[0].DataBoundItem;
                 TxtNombre.Text = _currentCapacitacion.Nombre;
@@ -158,7 +167,7 @@ namespace Desktop.Views
                 NumericCupo.Value = _currentCapacitacion.Cupo;
                 checkInscripcionAbierta.Checked = _currentCapacitacion.InscripcionAbierta;
                 TabControl.SelectedTab = TabPageAgregarEditar;
-                
+
             }
             else
             {
@@ -168,14 +177,14 @@ namespace Desktop.Views
 
         private async void BtnBuscar_Click(object sender, EventArgs e)
         {
-              DataGrid.DataSource = await _capacitacionService.GetAllAsync(TxtBuscar.Text);
+            DataGrid.DataSource = await _capacitacionService.GetAllAsync(TxtBuscar.Text);
         }
 
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
-            
-               // BtnBuscar.PerformClick();
-            
+
+            // BtnBuscar.PerformClick();
+
         }
 
         private void TimerStatusBar_Tick(object sender, EventArgs e)
@@ -215,6 +224,28 @@ namespace Desktop.Views
             {
                 MessageBox.Show("Debe seleccionar una capacitación para restaurar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void BtnAniadir_Click(object sender, EventArgs e)
+        {
+            var tipoInscripcionCapacitacion = new TipoInscripcionCapacitacion
+            {
+                TipoInscripcionId = (int)ComboTiposInscripciones.SelectedValue,
+                TipoInscripcion = (TipoInscripcion)ComboTiposInscripciones.SelectedItem,
+                CapacitacionId = _currentCapacitacion?.Id ?? 0,
+                Capacitacion = _currentCapacitacion,
+                Costo = NumericCosto.Value
+            };
+            _currentCapacitacion?.TiposDeInscripciones.Add(tipoInscripcionCapacitacion);
+            GridTiposInscripciones.DataSource = _currentCapacitacion?.TiposDeInscripciones.ToList();
+            GridTiposInscripciones.HideColumns("Id", "CapacitacionId", "Capacitacion", "TipoInscripcionId", "IsDeleted");
+        }
+
+        private void BtnQuitar_Click(object sender, EventArgs e)
+        {
+            var tipoInscripcionCapacitacionSeleccionada = (TipoInscripcionCapacitacion)GridTiposInscripciones.SelectedRows[0].DataBoundItem;
+            _currentCapacitacion?.TiposDeInscripciones.Remove(tipoInscripcionCapacitacionSeleccionada);
+            GridTiposInscripciones.DataSource = _currentCapacitacion?.TiposDeInscripciones.ToList();
         }
     }
 }

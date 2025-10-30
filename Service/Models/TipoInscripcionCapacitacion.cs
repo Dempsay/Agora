@@ -10,9 +10,9 @@ namespace Service.Models
     {
         public int Id { get; set; }
         public int CapacitacionId { get; set; }
-        public Capacitacion? capacitacion { get; set; }
+        public Capacitacion? Capacitacion { get; set; }
         public int TipoInscripcionId { get; set; }
-        public TipoInscripcion? tipoInscripcion { get; set; }
+        public TipoInscripcion? TipoInscripcion { get; set; }
         public decimal Costo { get; set; }
         public bool IsDeleted { get; set; } = false;
 

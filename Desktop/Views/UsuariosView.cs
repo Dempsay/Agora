@@ -3,11 +3,15 @@ using System.Threading.Tasks;
 using Service.Models;
 using Service.Services;
 using Service.Enums;
+using Firebase.Auth;
+using Firebase.Auth.Providers;
+using System.Net.Http.Headers;
 
 namespace Desktop.Views
 {
     public partial class UsuariosView : Form
     {
+        FirebaseAuthClient _firebaseAuthClient;
         GenericService<Usuario> _usuarioService = new GenericService<Usuario>();
         Usuario _currentUsuario;
         List<Usuario>? _usuarios;
@@ -16,9 +20,26 @@ namespace Desktop.Views
         {
             InitializeComponent();
             _ = GetAllData();
+            SettingFirebase();
             CheckVerEliminados.CheckedChanged += DisplayHideControlsRestoreButton;
 
         }
+
+        private void SettingFirebase()
+        {
+            var config = new FirebaseAuthConfig()
+            {
+                ApiKey = Service.Properties.Resources.ApiKeyFireBase,
+                AuthDomain = Service.Properties.Resources.AuthDomainFireBase,
+                Providers = new FirebaseAuthProvider[]
+    {
+         new EmailProvider()
+
+    }
+            };
+            _firebaseAuthClient = new FirebaseAuthClient(config);
+        }
+
         //ocultamos los botones cuando el checkbox cambia pero que no este relacionado con el evento del checkbox
         private void DisplayHideControlsRestoreButton(object sender, EventArgs e)
         {
@@ -106,7 +127,13 @@ namespace Desktop.Views
             TxtDni.Clear();
             TxtApellido.Clear();
             TxtEmail.Clear();
+            TxtPassword.Clear();
+            TxtPassword2.Clear();
             GetComboTiposDeUsuarios();
+            LabelPassword.Text = "Contraseña";
+            LabelPassword2.Text = "Repetir Contraseña";
+            TxtPassword.PlaceholderText = "Minimo 6 caracteres";
+            TxtPassword2.PlaceholderText = "Minimo 6 caracteres";
         }
 
         private void BtnCancelar_Click(object sender, EventArgs e)
@@ -117,7 +144,85 @@ namespace Desktop.Views
 
         private async void BtnGuardar_Click(object sender, EventArgs e)
         {
-            Usuario usuarioAGuardar = new Usuario
+            if (!DataControl())
+                return;
+
+            Usuario usuarioAGuardar = GetUserDataFromScreen();
+            bool responseSuccessfull = false;
+            if (_currentUsuario != null)
+            {
+                responseSuccessfull = await _usuarioService.UpdateAsync(usuarioAGuardar);
+                if (responseSuccessfull && !string.IsNullOrWhiteSpace(TxtPassword.Text))
+                    await UpdatePasswordInFirebase(usuarioAGuardar);// Modificar la contraseña en Firebase Authentication
+
+            }
+            if (_currentUsuario == null)//agregamos un nuevo usuario
+            {
+                try
+                {
+                    var nuevousuario = await _usuarioService.AddAsync(usuarioAGuardar);
+                    responseSuccessfull = nuevousuario != null;
+                    if (responseSuccessfull)
+                        await CreateUserInFirebase(nuevousuario);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al guardar el Usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            if (!responseSuccessfull)
+            {
+                MessageBox.Show("Error al guardar el Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            _currentUsuario = null; // Reset the modified movie after saving
+            LabelStatusMessage.Text = $"Usuario {usuarioAGuardar.Nombre} guardado correctamente";
+            TimerStatusBar.Start(); // Iniciar el temporizador para mostrar el mensaje en la barra de estado
+            await GetAllData();
+            LimpiarControlesAgregarEditar();
+            TabControl.SelectedTab = TabPageLista;
+        }
+
+        private async Task CreateUserInFirebase(Usuario? nuevousuario)
+        {
+            try
+            {
+                var userCredential = await _firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(
+                    nuevousuario.Email,
+                    TxtPassword.Text.Trim(),
+                    nuevousuario.Nombre + " " + nuevousuario.Apellido// Contraseña por defecto, se recomienda cambiarla luego
+                );
+                await SendEmailVerificationAsync(userCredential.User.GetIdTokenAsync().Result);
+            }
+            catch (FirebaseAuthException ex)
+            {
+                MessageBox.Show($"Error al crear el usuario en Firebase: {ex.Reason}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async Task UpdatePasswordInFirebase(Usuario usuarioAGuardar)
+        {
+            try
+            {
+                var userCredential = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(
+                    usuarioAGuardar.Email,
+                    TxtPassword.Text.Trim() // Contraseña actual
+                );
+                await userCredential.User.ChangePasswordAsync(
+                    TxtPassword2.Text.Trim() // Nueva contraseña
+                );
+            }
+            catch (FirebaseAuthException ex)
+            {
+                MessageBox.Show($"Error al modificar la contraseña en Firebase: {ex.Reason}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private Usuario GetUserDataFromScreen()
+        {
+            return new Usuario
             {
                 Id = _currentUsuario?.Id ?? 0,
                 Nombre = TxtNombre.Text,
@@ -127,29 +232,57 @@ namespace Desktop.Views
                 TipoUsuario = (TipoUsuarioEnum)(ComboTiposDeUsuarios.SelectedItem ?? TipoUsuarioEnum.Asistente)
 
             };
-            bool response = false;
-            if (_currentUsuario != null)
+        }
+
+        private bool DataControl()
+        {
+            //valiidaciones simples 
+            if (string.IsNullOrWhiteSpace(TxtNombre.Text))
             {
-                response = await _usuarioService.UpdateAsync(usuarioAGuardar);
+                MessageBox.Show("El campo Nombre es obligatorio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
-            else
+            if (string.IsNullOrWhiteSpace(TxtApellido.Text))
             {
-                var nuevousuario = await _usuarioService.AddAsync(usuarioAGuardar);
-                response = nuevousuario != null;
+                MessageBox.Show("El campo Apellido es obligatorio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
-            if (response)
+            if (string.IsNullOrWhiteSpace(TxtDni.Text))
             {
-                _currentUsuario = null; // Reset the modified movie after saving
-                LabelStatusMessage.Text = $"Usuario {usuarioAGuardar.Nombre} guardado correctamente";
-                TimerStatusBar.Start(); // Iniciar el temporizador para mostrar el mensaje en la barra de estado
-                await GetAllData();
-                LimpiarControlesAgregarEditar();
-                TabControl.SelectedTab = TabPageLista;
+                MessageBox.Show("El campo DNI es obligatorio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
-            else
+            if (string.IsNullOrWhiteSpace(TxtEmail.Text))
             {
-                MessageBox.Show("Error al agregar al Usuario", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El campo Email es obligatorio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
+            if (_currentUsuario == null && (TxtPassword.Text != TxtPassword2.Text))
+            {
+                MessageBox.Show("Las contraseñas ingresadas no coinciden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (_currentUsuario == null && (string.IsNullOrWhiteSpace(TxtPassword.Text) || string.IsNullOrWhiteSpace(TxtPassword2.Text)))
+            {
+                MessageBox.Show("Debe completar el campo contraseña y su verificacion.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (_currentUsuario != null && (string.IsNullOrWhiteSpace(TxtPassword.Text) && string.IsNullOrWhiteSpace(TxtPassword2.Text)))//modificacion que no cambia la contraseña
+            {
+                return true;
+            }
+            if (_currentUsuario != null && (string.IsNullOrWhiteSpace(TxtPassword.Text) || string.IsNullOrWhiteSpace(TxtPassword2.Text)))
+            {
+                MessageBox.Show("Para modificar la contraseña debe completar la contraseña anterior y nueva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if ((TxtPassword.Text.Length < 6) || (TxtPassword2.Text.Length < 6))
+            {
+                MessageBox.Show("Las contraseñas deben tener al menos 6 caracteres.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+
         }
 
         private void BtnModificar_Click(object sender, EventArgs e)
@@ -163,8 +296,13 @@ namespace Desktop.Views
                 TxtDni.Text = _currentUsuario.Dni;
                 TxtEmail.Text = _currentUsuario.Email;
                 ComboTiposDeUsuarios.SelectedItem = _currentUsuario.TipoUsuario;
-                TabControl.SelectedTab = TabPageAgregarEditar;
+                
 
+                LabelPassword.Text = "Contraseña anterior";
+                LabelPassword2.Text = "Nueva contraseña";
+                TxtPassword.PlaceholderText = "Dejar en blanco para no modificar";
+                TxtPassword2.PlaceholderText = "Dejar en blanco para no modificar";
+                TabControl.SelectedTab = TabPageAgregarEditar;
             }
             else
             {
@@ -222,5 +360,22 @@ namespace Desktop.Views
                 MessageBox.Show("Debe seleccionar un usuario para restaurar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        public async Task SendEmailVerificationAsync(string idToken)
+        {
+            var FirebaseApiKey = Service.Properties.Resources.ApiKeyFireBase;
+            var RequestUri = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + FirebaseApiKey;
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var content = new StringContent("{\"requestType\":\"VERIFY_EMAIL\",\"idToken\":\"" + idToken + "\"}");
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                var response = await client.PostAsync(RequestUri, content);
+                response.EnsureSuccessStatusCode();
+            }
+        }     
     }
 }

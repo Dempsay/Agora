@@ -43,6 +43,13 @@
             BtnAgregar = new FontAwesome.Sharp.IconButton();
             BtnModificar = new FontAwesome.Sharp.IconButton();
             TabPageAgregarEditar = new TabPage();
+            NumericCosto = new NumericUpDown();
+            label9 = new Label();
+            label8 = new Label();
+            BtnQuitar = new FontAwesome.Sharp.IconButton();
+            BtnAniadir = new FontAwesome.Sharp.IconButton();
+            GridTiposInscripciones = new DataGridView();
+            ComboTiposInscripciones = new ComboBox();
             checkInscripcionAbierta = new CheckBox();
             label7 = new Label();
             DateTimeFechaHora = new DateTimePicker();
@@ -61,17 +68,16 @@
             statusStrip1 = new StatusStrip();
             LabelStatusMessage = new ToolStripStatusLabel();
             TimerStatusBar = new System.Windows.Forms.Timer(components);
-            ComboTiposDeUsuarios = new ComboBox();
-            dataGridView1 = new DataGridView();
             TabControl.SuspendLayout();
             TabPageLista.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)FilmPicture).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DataGrid).BeginInit();
             TabPageAgregarEditar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)NumericCosto).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)GridTiposInscripciones).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NumericCupo).BeginInit();
             panel1.SuspendLayout();
             statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // TabControl
@@ -103,7 +109,7 @@
             TabPageLista.Margin = new Padding(2);
             TabPageLista.Name = "TabPageLista";
             TabPageLista.Padding = new Padding(2);
-            TabPageLista.Size = new Size(958, 358);
+            TabPageLista.Size = new Size(1010, 498);
             TabPageLista.TabIndex = 1;
             TabPageLista.Text = "Lista";
             TabPageLista.UseVisualStyleBackColor = true;
@@ -268,8 +274,13 @@
             // 
             // TabPageAgregarEditar
             // 
-            TabPageAgregarEditar.Controls.Add(dataGridView1);
-            TabPageAgregarEditar.Controls.Add(ComboTiposDeUsuarios);
+            TabPageAgregarEditar.Controls.Add(NumericCosto);
+            TabPageAgregarEditar.Controls.Add(label9);
+            TabPageAgregarEditar.Controls.Add(label8);
+            TabPageAgregarEditar.Controls.Add(BtnQuitar);
+            TabPageAgregarEditar.Controls.Add(BtnAniadir);
+            TabPageAgregarEditar.Controls.Add(GridTiposInscripciones);
+            TabPageAgregarEditar.Controls.Add(ComboTiposInscripciones);
             TabPageAgregarEditar.Controls.Add(checkInscripcionAbierta);
             TabPageAgregarEditar.Controls.Add(label7);
             TabPageAgregarEditar.Controls.Add(DateTimeFechaHora);
@@ -291,6 +302,90 @@
             TabPageAgregarEditar.TabIndex = 0;
             TabPageAgregarEditar.Text = "Agregar/Editar";
             TabPageAgregarEditar.UseVisualStyleBackColor = true;
+            // 
+            // NumericCosto
+            // 
+            NumericCosto.Location = new Point(715, 222);
+            NumericCosto.Margin = new Padding(2);
+            NumericCosto.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            NumericCosto.Name = "NumericCosto";
+            NumericCosto.Size = new Size(144, 27);
+            NumericCosto.TabIndex = 30;
+            NumericCosto.TextAlign = HorizontalAlignment.Right;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(748, 195);
+            label9.Margin = new Padding(2, 0, 2, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(65, 20);
+            label9.TabIndex = 29;
+            label9.Text = "Importe:";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(445, 195);
+            label8.Margin = new Padding(2, 0, 2, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(263, 20);
+            label8.TabIndex = 28;
+            label8.Text = "Tipo de inscripcion de la capacitacion:";
+            // 
+            // BtnQuitar
+            // 
+            BtnQuitar.Anchor = AnchorStyles.Bottom;
+            BtnQuitar.IconChar = FontAwesome.Sharp.IconChar.Save;
+            BtnQuitar.IconColor = Color.Black;
+            BtnQuitar.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            BtnQuitar.ImageAlign = ContentAlignment.MiddleLeft;
+            BtnQuitar.Location = new Point(882, 321);
+            BtnQuitar.Margin = new Padding(2);
+            BtnQuitar.Name = "BtnQuitar";
+            BtnQuitar.Size = new Size(109, 43);
+            BtnQuitar.TabIndex = 27;
+            BtnQuitar.Text = "&Quitar";
+            BtnQuitar.TextAlign = ContentAlignment.MiddleRight;
+            BtnQuitar.UseVisualStyleBackColor = true;
+            BtnQuitar.Click += BtnQuitar_Click;
+            // 
+            // BtnAniadir
+            // 
+            BtnAniadir.Anchor = AnchorStyles.Bottom;
+            BtnAniadir.IconChar = FontAwesome.Sharp.IconChar.Save;
+            BtnAniadir.IconColor = Color.Black;
+            BtnAniadir.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            BtnAniadir.ImageAlign = ContentAlignment.MiddleLeft;
+            BtnAniadir.Location = new Point(882, 237);
+            BtnAniadir.Margin = new Padding(2);
+            BtnAniadir.Name = "BtnAniadir";
+            BtnAniadir.Size = new Size(109, 43);
+            BtnAniadir.TabIndex = 26;
+            BtnAniadir.Text = "&Añadir";
+            BtnAniadir.TextAlign = ContentAlignment.MiddleRight;
+            BtnAniadir.UseVisualStyleBackColor = true;
+            BtnAniadir.Click += BtnAniadir_Click;
+            // 
+            // GridTiposInscripciones
+            // 
+            GridTiposInscripciones.AllowUserToAddRows = false;
+            GridTiposInscripciones.AllowUserToDeleteRows = false;
+            GridTiposInscripciones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            GridTiposInscripciones.Location = new Point(445, 256);
+            GridTiposInscripciones.Name = "GridTiposInscripciones";
+            GridTiposInscripciones.ReadOnly = true;
+            GridTiposInscripciones.RowHeadersWidth = 51;
+            GridTiposInscripciones.Size = new Size(432, 164);
+            GridTiposInscripciones.TabIndex = 25;
+            // 
+            // ComboTiposInscripciones
+            // 
+            ComboTiposInscripciones.FormattingEnabled = true;
+            ComboTiposInscripciones.Location = new Point(445, 222);
+            ComboTiposInscripciones.Name = "ComboTiposInscripciones";
+            ComboTiposInscripciones.Size = new Size(251, 28);
+            ComboTiposInscripciones.TabIndex = 24;
             // 
             // checkInscripcionAbierta
             // 
@@ -473,26 +568,6 @@
             TimerStatusBar.Interval = 5000;
             TimerStatusBar.Tick += TimerStatusBar_Tick;
             // 
-            // ComboTiposDeUsuarios
-            // 
-            ComboTiposDeUsuarios.FormattingEnabled = true;
-            ComboTiposDeUsuarios.Location = new Point(448, 190);
-            ComboTiposDeUsuarios.Name = "ComboTiposDeUsuarios";
-            ComboTiposDeUsuarios.Size = new Size(251, 28);
-            ComboTiposDeUsuarios.TabIndex = 24;
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(448, 224);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(251, 164);
-            dataGridView1.TabIndex = 25;
-            // 
             // CapacitacionesView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -512,12 +587,13 @@
             ((System.ComponentModel.ISupportInitialize)DataGrid).EndInit();
             TabPageAgregarEditar.ResumeLayout(false);
             TabPageAgregarEditar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)NumericCosto).EndInit();
+            ((System.ComponentModel.ISupportInitialize)GridTiposInscripciones).EndInit();
             ((System.ComponentModel.ISupportInitialize)NumericCupo).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -555,7 +631,12 @@
         private Label label7;
         private DateTimePicker DateTimeFechaHora;
         private CheckBox checkInscripcionAbierta;
-        private ComboBox ComboTiposDeUsuarios;
-        private DataGridView dataGridView1;
+        private ComboBox ComboTiposInscripciones;
+        private DataGridView GridTiposInscripciones;
+        private Label label8;
+        private FontAwesome.Sharp.IconButton BtnQuitar;
+        private FontAwesome.Sharp.IconButton BtnAniadir;
+        private NumericUpDown NumericCosto;
+        private Label label9;
     }
 }

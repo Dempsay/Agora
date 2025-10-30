@@ -120,6 +120,7 @@
             // 
             TxtContraseña.Location = new Point(508, 89);
             TxtContraseña.Name = "TxtContraseña";
+            TxtContraseña.PasswordChar = '*';
             TxtContraseña.Size = new Size(196, 27);
             TxtContraseña.TabIndex = 9;
             TxtContraseña.TextChanged += TxtContraseña_TextChanged;
