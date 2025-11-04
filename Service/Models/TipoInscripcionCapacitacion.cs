@@ -18,7 +18,7 @@ namespace Service.Models
 
         public override string ToString()
         {
-            return $"{tipoInscripcion?.Nombre} - Costo: {Costo}";
+            return $"{TipoInscripcion?.Nombre} - Costo: {Costo}";
         }
 
     }

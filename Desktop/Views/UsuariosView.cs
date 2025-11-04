@@ -7,6 +7,7 @@ using Firebase.Auth;
 using Firebase.Auth.Providers;
 using System.Net.Http.Headers;
 // 25 209 750 - 83562
+//
 namespace Desktop.Views
 {
     public partial class UsuariosView : Form
@@ -53,6 +54,8 @@ namespace Desktop.Views
         }
         private async Task GetAllData()
         {
+            try
+            {
             if (CheckVerEliminados.Checked)
             {
                 _usuarios = await _usuarioService.GetAllDeletedsAsync();
@@ -60,6 +63,12 @@ namespace Desktop.Views
             else
             {
                 _usuarios = await _usuarioService.GetAllAsync();
+            }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Error al obtener los usuarios: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             DataGrid.DataSource = _usuarios;
             DataGrid.Columns["Id"].Visible = false;

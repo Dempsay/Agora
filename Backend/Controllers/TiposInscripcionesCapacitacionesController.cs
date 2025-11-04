@@ -25,7 +25,7 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TipoInscripcionCapacitacion>>> GetTiposInscripcionesCapacitacion()
         {
-            return await _context.TiposInscripcionesCapacitacion.Include(t => t.capacitacion).Include(t => t.tipoInscripcion).ToListAsync();
+            return await _context.TiposInscripcionesCapacitacion.Include(t => t.Capacitacion).Include(t => t.TipoInscripcion).ToListAsync();
         }
 
         [HttpGet("Deleteds/")]
