@@ -23,6 +23,5 @@ namespace Service.Models
         {
             return Nombre;
         }
-
     }
 }
