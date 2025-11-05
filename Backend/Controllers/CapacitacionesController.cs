@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend.DataContext;
 using Service.Models;
+using Backend.ExtensionMethods;
 
 namespace Backend.Controllers
 {
@@ -65,14 +66,48 @@ namespace Backend.Controllers
             {
                 return BadRequest();
             }
+            //Attach las entidades TipoInscripcion para que no intente guardarlas nuevamente
+            foreach (var tipoInscripcionCapacitacion in capacitacion.TiposDeInscripciones)
+            {
+                _context.TryAttach(tipoInscripcionCapacitacion.TipoInscripcion);
+            }
 
-            _context.Entry(capacitacion).State = EntityState.Modified;
+            var capacitacionExistente = await _context.Capacitaciones
+                .AsNoTracking()
+                .Include(c => c.TiposDeInscripciones)
+                .FirstOrDefaultAsync(c => c.Id == capacitacion.Id);
+
+            if (capacitacionExistente == null)
+            {
+                return NotFound("No se encontro la capacitacion que se intentaba modificar");
+            }
+
+            var tiposInscripcionesAEliminar = capacitacionExistente.TiposDeInscripciones
+                .Where(t => !capacitacion.TiposDeInscripciones
+                .Any(ti => ti.Id == t.Id))
+                .ToList();
+            foreach (var tipoInscripcionCapacitacion in tiposInscripcionesAEliminar)
+            {
+                _context.TiposInscripcionesCapacitacion.Remove(tipoInscripcionCapacitacion);
+            }
+
+            var tiposInscripcionesAAgregar = capacitacion.TiposDeInscripciones
+                .Where(ti => !capacitacionExistente.TiposDeInscripciones
+                .Any(t => t.Id == ti.Id))
+                .ToList();
+            foreach (var tipoInscripcionCapacitacion in tiposInscripcionesAAgregar)
+            { 
+                _context.TryAttach(tipoInscripcionCapacitacion.TipoInscripcion);
+                _context.TiposInscripcionesCapacitacion.Add(tipoInscripcionCapacitacion);
+            }
+
+                _context.Entry(capacitacion).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
                 if (!CapacitacionExists(id))
                 {
@@ -80,7 +115,7 @@ namespace Backend.Controllers
                 }
                 else
                 {
-                    throw;
+                    throw new Exception(e.Message);
                 }
             }
 
