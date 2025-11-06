@@ -34,13 +34,13 @@
             label2 = new Label();
             GridInscripciones = new DataGridView();
             panel2 = new Panel();
+            label4 = new Label();
+            ComboTIpoInscripcion = new ComboBox();
             BtnAgregarUsuario = new FontAwesome.Sharp.IconButton();
             BtnBuscar = new FontAwesome.Sharp.IconButton();
             TxtBuscarInscriptos = new TextBox();
             GridUsiarios = new DataGridView();
             label3 = new Label();
-            ComboTIpoInscripcion = new ComboBox();
-            label4 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)GridInscripciones).BeginInit();
             panel2.SuspendLayout();
@@ -55,7 +55,7 @@
             panel1.Location = new Point(-1, -1);
             panel1.Margin = new Padding(2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1262, 75);
+            panel1.Size = new Size(1215, 75);
             panel1.TabIndex = 8;
             // 
             // label1
@@ -70,11 +70,12 @@
             // 
             // ComboCapacitaciones
             // 
+            ComboCapacitaciones.DropDownStyle = ComboBoxStyle.DropDownList;
             ComboCapacitaciones.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ComboCapacitaciones.FormattingEnabled = true;
             ComboCapacitaciones.Location = new Point(177, 121);
             ComboCapacitaciones.Name = "ComboCapacitaciones";
-            ComboCapacitaciones.Size = new Size(445, 39);
+            ComboCapacitaciones.Size = new Size(416, 39);
             ComboCapacitaciones.TabIndex = 9;
             ComboCapacitaciones.SelectedIndexChanged += ComboCapacitaciones_SelectedIndexChanged;
             // 
@@ -93,14 +94,16 @@
             GridInscripciones.AllowUserToAddRows = false;
             GridInscripciones.AllowUserToDeleteRows = false;
             GridInscripciones.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GridInscripciones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            GridInscripciones.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             GridInscripciones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            GridInscripciones.Location = new Point(25, 265);
+            GridInscripciones.Location = new Point(25, 187);
             GridInscripciones.Name = "GridInscripciones";
             GridInscripciones.ReadOnly = true;
             GridInscripciones.RowHeadersVisible = false;
             GridInscripciones.RowHeadersWidth = 51;
-            GridInscripciones.SelectionMode = DataGridViewSelectionMode.FullColumnSelect;
-            GridInscripciones.Size = new Size(597, 416);
+            GridInscripciones.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            GridInscripciones.Size = new Size(550, 410);
             GridInscripciones.TabIndex = 11;
             // 
             // panel2
@@ -114,10 +117,32 @@
             panel2.Controls.Add(TxtBuscarInscriptos);
             panel2.Controls.Add(GridUsiarios);
             panel2.Controls.Add(label3);
-            panel2.Location = new Point(646, 100);
+            panel2.Location = new Point(599, 100);
             panel2.Name = "panel2";
-            panel2.Size = new Size(590, 595);
+            panel2.Size = new Size(590, 511);
             panel2.TabIndex = 12;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Location = new Point(25, 364);
+            label4.Name = "label4";
+            label4.Size = new Size(208, 31);
+            label4.TabIndex = 17;
+            label4.Text = "TIpo de Inscripcion";
+            // 
+            // ComboTIpoInscripcion
+            // 
+            ComboTIpoInscripcion.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            ComboTIpoInscripcion.DropDownStyle = ComboBoxStyle.DropDownList;
+            ComboTIpoInscripcion.Font = new Font("Segoe UI", 12F);
+            ComboTIpoInscripcion.FormattingEnabled = true;
+            ComboTIpoInscripcion.Location = new Point(25, 408);
+            ComboTIpoInscripcion.Name = "ComboTIpoInscripcion";
+            ComboTIpoInscripcion.Size = new Size(527, 36);
+            ComboTIpoInscripcion.TabIndex = 16;
             // 
             // BtnAgregarUsuario
             // 
@@ -135,6 +160,7 @@
             BtnAgregarUsuario.TextAlign = ContentAlignment.MiddleRight;
             BtnAgregarUsuario.UseCompatibleTextRendering = true;
             BtnAgregarUsuario.UseVisualStyleBackColor = true;
+            BtnAgregarUsuario.Click += BtnAgregarUsuario_Click;
             // 
             // BtnBuscar
             // 
@@ -175,7 +201,8 @@
             GridUsiarios.ReadOnly = true;
             GridUsiarios.RowHeadersVisible = false;
             GridUsiarios.RowHeadersWidth = 51;
-            GridUsiarios.Size = new Size(541, 183);
+            GridUsiarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            GridUsiarios.Size = new Size(541, 190);
             GridUsiarios.TabIndex = 12;
             // 
             // label3
@@ -188,30 +215,11 @@
             label3.TabIndex = 11;
             label3.Text = "Agregar inscripción";
             // 
-            // ComboTIpoInscripcion
-            // 
-            ComboTIpoInscripcion.Font = new Font("Segoe UI", 12F);
-            ComboTIpoInscripcion.FormattingEnabled = true;
-            ComboTIpoInscripcion.Location = new Point(25, 408);
-            ComboTIpoInscripcion.Name = "ComboTIpoInscripcion";
-            ComboTIpoInscripcion.Size = new Size(208, 36);
-            ComboTIpoInscripcion.TabIndex = 16;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(25, 364);
-            label4.Name = "label4";
-            label4.Size = new Size(208, 31);
-            label4.TabIndex = 17;
-            label4.Text = "TIpo de Inscripcion";
-            // 
             // InscripcionesView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1259, 693);
+            ClientSize = new Size(1212, 609);
             Controls.Add(panel2);
             Controls.Add(GridInscripciones);
             Controls.Add(label2);
@@ -244,7 +252,9 @@
         private TextBox TxtBuscarInscriptos;
         private FontAwesome.Sharp.IconButton BtnBuscar;
         private FontAwesome.Sharp.IconButton BtnAgregarUsuario;
-        private ComboBox ComboTIpoInscripcion;
         private Label label4;
+        private TextBox textBox1;
+        private ComboBox ComboTIpoInscripcion;
+        private TextBox TxtCosto;
     }
 }

@@ -27,8 +27,9 @@ namespace Desktop.Views
         }
         private async Task GetAllData()
         {
-            await GetComboCapacitaciones();
-            await GetGrillaUsuarios();
+            var GetComboTask = GetComboCapacitaciones();
+            var GetGrillaTask = GetGrillaUsuarios();
+            await Task.WhenAll(GetComboTask, GetGrillaTask);
 
         }
 
@@ -53,11 +54,32 @@ namespace Desktop.Views
             //controlamos que no sea null y haya una capacitación seleccionada
             if (ComboCapacitaciones.SelectedItem is Capacitacion selectedCapacitacion)
             {
-                _inscripciones = await _inscripcionService.GetInscriptosAsync(selectedCapacitacion.Id);
-                GridInscripciones.DataSource = _inscripciones;
-                GridInscripciones.HideColumns("Id", "UsuarioId", "TipoInscripcionId", "CapacitacionId", "Capacitacion", "UsuarioCobroId", "isDeleted");
-                await GetGrillaUsuarios();
+                RefreshInscripciones(selectedCapacitacion);
+                GetComboTiposDeInscripciones(selectedCapacitacion);
             }
+        }
+
+        private void GetComboTiposDeInscripciones(Capacitacion selectedCapacitacion)
+        {
+            ComboTIpoInscripcion.DataSource = selectedCapacitacion.TiposDeInscripciones.ToList();
+            ComboTIpoInscripcion.DisplayMember = "TipoInscripcion";
+            ComboTIpoInscripcion.ValueMember = "TipoInscripcionId";
+            ComboTIpoInscripcion.SelectedIndex = -1;
+        }
+
+        private async void RefreshInscripciones(Capacitacion selectedCapacitacion)
+        {
+            _inscripciones = selectedCapacitacion.Inscripciones.ToList();
+            //_inscripciones = await _inscripcionService.GetInscriptosAsync(selectedCapacitacion.Id);
+            GridInscripciones.DataSource = _inscripciones;
+            GridInscripciones.HideColumns("Id", "UsuarioId", "TipoInscripcionId", "CapacitacionId", "Capacitacion", "UsuarioCobroId", "isDeleted", "UsuarioCobro", "Pagado");
+            if(GridInscripciones.Columns.Contains("Importe"))
+            {
+                GridInscripciones.Columns["Importe"].DefaultCellStyle.Format = "C2";
+                GridInscripciones.Columns["Importe"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+            
+            await GetGrillaUsuarios();
         }
 
         private void BtnBuscar_Click(object sender, EventArgs e)
@@ -84,6 +106,51 @@ namespace Desktop.Views
                 BtnBuscar.PerformClick();
                 e.Handled = true;
             }
+        }
+
+        private async void BtnAgregarUsuario_Click(object sender, EventArgs e)
+        {
+            //si no hay usuario seleccionado advierte y sale
+            if (GridUsiarios.CurrentRow?.DataBoundItem is not Usuario selectedUsuario)
+            {
+                MessageBox.Show("Seleccione un usuario para inscribir.");
+                return;
+            }
+            //si no hay capacitación seleccionada advierte y sale
+            if (ComboCapacitaciones.SelectedItem is not Capacitacion selectedCapacitacion)
+            {
+                MessageBox.Show("Seleccione una capacitación para inscribir al usuario.");
+                return;
+            }
+            //si no hay un tipo de inscripción seleccionado advierte y sale
+            if (ComboTIpoInscripcion.SelectedItem is not TipoInscripcionCapacitacion selectedTipoInscipcion)
+            {
+                MessageBox.Show("La capacitación seleccionada no tiene tipos de inscripción disponibles.");
+                return;
+            }
+            var nuevaInscripcion = new Inscripcion
+            {
+                UsuarioId = selectedUsuario.Id,
+                Usuario = selectedUsuario,
+                Importe = selectedTipoInscipcion.Costo,
+                CapacitacionId = selectedCapacitacion.Id,
+                TipoInscripcionId = selectedTipoInscipcion.TipoInscripcionId,
+                TipoInscripcion = selectedTipoInscipcion.TipoInscripcion,
+                UsuarioCobroId = null
+            }
+            selectedCapacitacion.Inscripciones.Add(nuevaInscripcion);
+            RefreshInscripciones(selectedCapacitacion);
+            try
+            {
+                await _capacitacionService.UpdateAsync(selectedCapacitacion);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al inscribir el usuario: {ex.Message}");
+            }
+            await _capacitacionService.UpdateAsync(selectedCapacitacion);
+
         }
     }
 }
