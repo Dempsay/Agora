@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace Desktop.Views
@@ -37,8 +38,8 @@ namespace Desktop.Views
         {
             _usuarios = (await _usuarioService.GetAllAsync());
             _usuarios = _usuarios?.Where(u => _inscripciones != null && !_inscripciones.Any(i => i.UsuarioId == u.Id)).ToList();
-            GridUsiarios.DataSource = _usuarios;
-            GridUsiarios.HideColumns("Id", "DeleteDate", "IsDeleted");
+            GridUsuarios.DataSource = _usuarios.OrderBy(u => u.Apellido).ThenBy(u => u.Nombre).ToList();
+            GridUsuarios.HideColumns("Id", "DeleteDate", "IsDeleted");
         }
 
         private async Task GetComboCapacitaciones()
@@ -71,23 +72,24 @@ namespace Desktop.Views
         {
             _inscripciones = selectedCapacitacion.Inscripciones.ToList();
             //_inscripciones = await _inscripcionService.GetInscriptosAsync(selectedCapacitacion.Id);
+            _inscripciones =_inscripciones?.OrderBy(i => i.Usuario.Apellido).ThenBy(i => i.Usuario.Nombre).ToList();
             GridInscripciones.DataSource = _inscripciones;
             GridInscripciones.HideColumns("Id", "UsuarioId", "TipoInscripcionId", "CapacitacionId", "Capacitacion", "UsuarioCobroId", "isDeleted", "UsuarioCobro", "Pagado");
-            if(GridInscripciones.Columns.Contains("Importe"))
+            if (GridInscripciones.Columns.Contains("Importe"))
             {
                 GridInscripciones.Columns["Importe"].DefaultCellStyle.Format = "C2";
                 GridInscripciones.Columns["Importe"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             }
-            
+
             await GetGrillaUsuarios();
         }
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
             _usuarios = _usuarios?.Where(u => u.Nombre.Contains(TxtBuscarInscriptos.Text, StringComparison.OrdinalIgnoreCase) || u.Apellido.Contains(TxtBuscarInscriptos.Text, StringComparison.OrdinalIgnoreCase)).ToList();
-            GridUsiarios.DataSource = null;
-            GridUsiarios.DataSource = _usuarios;
-            GridUsiarios.HideColumns("Id", "DeleteDate", "IsDeleted");
+            GridUsuarios.DataSource = null;
+            GridUsuarios.DataSource = _usuarios;
+            GridUsuarios.HideColumns("Id", "DeleteDate", "IsDeleted");
         }
 
         private async void TxtBuscarInscriptos_TextChanged(object sender, EventArgs e)
@@ -111,7 +113,7 @@ namespace Desktop.Views
         private async void BtnAgregarUsuario_Click(object sender, EventArgs e)
         {
             //si no hay usuario seleccionado advierte y sale
-            if (GridUsiarios.CurrentRow?.DataBoundItem is not Usuario selectedUsuario)
+            if (GridUsuarios.CurrentRow?.DataBoundItem is not Usuario selectedUsuario)
             {
                 MessageBox.Show("Seleccione un usuario para inscribir.");
                 return;
@@ -137,7 +139,7 @@ namespace Desktop.Views
                 TipoInscripcionId = selectedTipoInscipcion.TipoInscripcionId,
                 TipoInscripcion = selectedTipoInscipcion.TipoInscripcion,
                 UsuarioCobroId = null
-            }
+            };
             selectedCapacitacion.Inscripciones.Add(nuevaInscripcion);
             RefreshInscripciones(selectedCapacitacion);
             try
@@ -151,6 +153,14 @@ namespace Desktop.Views
             }
             await _capacitacionService.UpdateAsync(selectedCapacitacion);
 
+        }
+
+        private void GridInscripciones_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuInscripcion.Show(GridInscripciones, new Point(e.X, e.Y));
+            }
         }
     }
 }
