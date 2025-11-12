@@ -1,4 +1,5 @@
 ﻿using Desktop.ExtensionMetthd;
+using Desktop.ViewReports;
 using Service.Models;
 using Service.Services;
 using System;
@@ -72,7 +73,7 @@ namespace Desktop.Views
         {
             _inscripciones = selectedCapacitacion.Inscripciones.ToList();
             //_inscripciones = await _inscripcionService.GetInscriptosAsync(selectedCapacitacion.Id);
-            _inscripciones =_inscripciones?.OrderBy(i => i.Usuario.Apellido).ThenBy(i => i.Usuario.Nombre).ToList();
+            _inscripciones = _inscripciones?.OrderBy(i => i.Usuario.Apellido).ThenBy(i => i.Usuario.Nombre).ToList();
             GridInscripciones.DataSource = _inscripciones;
             GridInscripciones.HideColumns("Id", "UsuarioId", "TipoInscripcionId", "CapacitacionId", "Capacitacion", "UsuarioCobroId", "isDeleted", "UsuarioCobro", "Pagado");
             if (GridInscripciones.Columns.Contains("Importe"))
@@ -136,7 +137,7 @@ namespace Desktop.Views
                         }
                         RefreshInscripciones(selectedCapacitacion);
                     }
-                    
+
                 }
             };
         }
@@ -217,6 +218,15 @@ namespace Desktop.Views
             {
                 ContextMenuInscripcion.Show(GridInscripciones, new Point(e.X, e.Y));
             }
+        }
+
+        private void BtnImprimirInscripciones_Click(object sender, EventArgs e)
+        {
+            var selectedCapacitacion = ComboCapacitaciones.SelectedItem as Capacitacion;
+
+            var inscripcionesViewReport = new InscripcionesViewReport(selectedCapacitacion);
+            inscripcionesViewReport.MdiParent = this.MdiParent;
+            inscripcionesViewReport.Show();
         }
     }
 }
